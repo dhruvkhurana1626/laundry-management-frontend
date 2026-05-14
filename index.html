@@ -1,47 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Laundry Dashboard</title>
-  <link rel="stylesheet" href="/css/common.css">
-  <link rel="stylesheet" href="/css/dashboard.css">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
 
-<div class="top-bar">
-  <span class="logo">Laundry Dashboard</span>
+<div class="container">
 
-  <div class="nav-icons">
-    <span id="ordersPageBtn" title="View Orders">📋 View All Orders</span>
+  <div><h2>Admin Login</h2></div>
+
+  <div>
+
+    <form onsubmit="login(event)">
+    <label>Username: <span class="hint">[ Hint - admin ]</span></label>
+    <input type="text" id="username" placeholder="Enter username" />
+    <br/><br/>
+
+    <label>Password: <span class="hint">[ Hint - admin123 ]</span></label>
+    <input type="password" id="password" placeholder="Enter password" />
+    <br/><br/>
+
+    <button type="submit">Login</button>
+
+    <p id="error" style="color:red;"></p>
+
+  </form>
   </div>
+
 </div>
 
-<hr/>
-
-<!-- DASHBOARD -->
-<h2>Dashboard</h2>
-<div id="dashboard" class="dashboard-grid"></div>
-
-<hr/>
-
-<!-- CREATE ORDER -->
-<h2>Create Order</h2>
-
-<input id="name" placeholder="Customer Name" />
-<input id="phone" placeholder="Phone" />
-<input id="email" placeholder="Email" />
-
-<h4>Garments</h4>
-<div id="garments-container"></div>
-
-<button id="addGarmentBtn">+ Add Garment</button>
-<button id="createOrderBtn">Create Order</button>
-
-<hr/>
-
-<button id="logoutBtn">Logout</button>
-
-<script src="/js/common.js"></script>
-<script src="/js/dashboard.js"></script>
+<script src="/js/login.js"></script>
 
 </body>
 </html>
