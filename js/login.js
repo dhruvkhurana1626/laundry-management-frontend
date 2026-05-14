@@ -1,5 +1,5 @@
 const BASE_URL =
-  "http://localhost:8080/api/v1/order";
+  "http://13.126.101.98:8080/api/v1/order";
 
 function login(event) {
 

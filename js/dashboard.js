@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/api/v1/dashboard";
+const BASE_URL = "http://13.126.101.98:8080/api/v1/dashboard";
 
 // ---------- SAFE EVENT BINDING ----------
 
@@ -80,7 +80,7 @@ function loadDashboard() {
     </div>
   `;
 
-  fetchWithAuth("http://localhost:8080/api/v1/dashboard")
+  fetchWithAuth(BASE_URL)
 
     .then(res => {
 
@@ -218,7 +218,7 @@ function createOrder() {
   createBtn.innerText = "Creating...";
 
   fetchWithAuth(
-    "http://localhost:8080/api/v1/order",
+    "http://13.126.101.98:8080/api/v1/order",
     {
       method: "POST",
       body: JSON.stringify(data)

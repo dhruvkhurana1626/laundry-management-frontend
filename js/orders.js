@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/api/v1/order";
+const BASE_URL = "http://13.126.101.98:8080/api/v1/order";
 
 //automatically load orders 
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,11 +31,11 @@ function renderOrders(list) {
 
     tr.innerHTML = `
       <td>${order.customerName}</td>
-      <td>${order.phone}</td>
+      <td class="hide-mobile">${order.phone}</td>
       <td>${order.orderStatus}</td>
-      <td>${formatDate(order.createdAt)}</td>
+      <td class="hide-mobile">${formatDate(order.createdAt)}</td>
       <td>₹${order.totalAmount}</td>
-      <td>${order.id}</td>
+      <td class="hide-mobile">${order.id}</td>
 
       <td>
         <button class="viewBtn">View</button>
