@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Laundry Dashboard</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+<div class="top-bar">
+  <span class="logo">Laundry Dashboard</span>
+
+  <div class="nav-icons">
+    <span id="ordersPageBtn" title="View Orders">📋 View All Orders</span>
+  </div>
+</div>
+
+<hr/>
+
+<!-- DASHBOARD -->
+<h2>Dashboard</h2>
+<div id="dashboard" class="dashboard-grid"></div>
+
+<hr/>
+
+<!-- CREATE ORDER -->
+<h2>Create Order</h2>
+
+<input id="name" placeholder="Customer Name" />
+<input id="phone" placeholder="Phone" />
+<input id="email" placeholder="Email" />
+
+<h4>Garments</h4>
+<div id="garments-container"></div>
+
+<button id="addGarmentBtn">+ Add Garment</button>
+<button id="createOrderBtn">Create Order</button>
+
+<hr/>
+
+<button id="logoutBtn">Logout</button>
+
+<script src="../js/common.js"></script>
+<script src="../js/dashboard.js"></script>
+
+</body>
+</html>
