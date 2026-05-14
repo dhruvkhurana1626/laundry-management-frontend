@@ -38,7 +38,7 @@ function login(event) {
 
     localStorage.setItem("auth", token);
 
-    window.location.href = "index.html";
+    window.location.href = "dashboard.html";
 
   })
 

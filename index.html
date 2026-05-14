@@ -2,35 +2,91 @@
 <html>
 <head>
   <title>Admin Login</title>
-  <link rel="stylesheet" href="/css/login.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../css/login.css">
 </head>
+
 <body>
 
 <div class="container">
 
-  <div><h2>Admin Login</h2></div>
+  <div class="login-card">
 
-  <div>
+    <h1>Laundry Management System</h1>
+
+    <p class="subtitle">
+      Admin Dashboard Login
+    </p>
 
     <form onsubmit="login(event)">
-    <label>Username: <span class="hint">[ Hint - admin ]</span></label>
-    <input type="text" id="username" placeholder="Enter username" />
-    <br/><br/>
 
-    <label>Password: <span class="hint">[ Hint - admin123 ]</span></label>
-    <input type="password" id="password" placeholder="Enter password" />
-    <br/><br/>
+      <label>
+        Username
+        <span class="hint">
+          [ demo: admin ]
+        </span>
+      </label>
 
-    <button type="submit">Login</button>
+      <input
+        type="text"
+        id="username"
+        placeholder="Enter username"
+      />
 
-    <p id="error" style="color:red;"></p>
+      <label>
+        Password
+        <span class="hint">
+          [ demo: admin123 ]
+        </span>
+      </label>
 
-  </form>
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter password"
+      />
+
+      <button type="submit">
+        Login
+      </button>
+
+      <p id="error" class="error"></p>
+
+    </form>
+
+    <div class="footer">
+
+      <p>
+        Developed by Dhruv Khurana
+      </p>
+
+      <div class="links">
+
+        <a
+          href="mailto:DhruvKhurana162@gmail.com"
+          target="_blank"
+        >
+          Gmail
+        </a>
+
+        <a
+          href="https://linkedin.com/in/YOUR-LINKEDIN"
+          target="_blank"
+        >
+          LinkedIn
+        </a>
+
+      </div>
+
+    </div>
+
   </div>
 
 </div>
 
-<script src="/js/login.js"></script>
+<script src="../js/login.js"></script>
 
 </body>
 </html>

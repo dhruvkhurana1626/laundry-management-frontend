@@ -276,5 +276,5 @@ function createOrder() {
 // logout
 function logout() {
   localStorage.removeItem("auth");
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 }
