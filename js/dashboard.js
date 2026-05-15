@@ -1,4 +1,4 @@
-const BASE_URL = "http://13.126.101.98:8080/api/v1/dashboard";
+const BASE_URL = "https://zips-recoil-professor.ngrok-free.dev/api/v1/dashboard";
 
 // ---------- SAFE EVENT BINDING ----------
 
@@ -218,7 +218,7 @@ function createOrder() {
   createBtn.innerText = "Creating...";
 
   fetchWithAuth(
-    "http://13.126.101.98:8080/api/v1/order",
+    "https://zips-recoil-professor.ngrok-free.dev/api/v1/order",
     {
       method: "POST",
       body: JSON.stringify(data)
