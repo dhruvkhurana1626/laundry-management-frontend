@@ -1,4 +1,4 @@
-const BASE_URL = "https://zips-recoil-professor.ngrok-free.dev/api/v1/order";
+const BASE_URL = "https://laundry-management-backend.vercel.app/api/v1/order";
 
 function login(event) {
 

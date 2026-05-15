@@ -1,4 +1,4 @@
-const BASE_URL = "https://zips-recoil-professor.ngrok-free.dev/api/v1/dashboard";
+const BASE_URL = "https://laundry-management-backend.vercel.app/api/v1/dashboard";
 
 // ---------- SAFE EVENT BINDING ----------
 
@@ -218,7 +218,7 @@ function createOrder() {
   createBtn.innerText = "Creating...";
 
   fetchWithAuth(
-    "https://zips-recoil-professor.ngrok-free.dev/api/v1/order",
+    "https://laundry-management-backend.vercel.app/api/v1/order",
     {
       method: "POST",
       body: JSON.stringify(data)
