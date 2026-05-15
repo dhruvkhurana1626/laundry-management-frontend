@@ -1,4 +1,4 @@
-const BASE_URL = "https://zips-recoil-professor.ngrok-free.dev/api/v1/order";
+const BASE_URL = "https://13.126.101.98/api/v1/order";
 
 //automatically load orders 
 document.addEventListener("DOMContentLoaded", () => {
