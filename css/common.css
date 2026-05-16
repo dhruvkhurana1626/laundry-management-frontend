@@ -124,3 +124,40 @@ hr {
 
   z-index: 2000;
 }
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+
+  body{
+    padding: 10px;
+  }
+
+  .top-bar{
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    align-items: stretch;
+  }
+
+  .nav-icons{
+    width: 100%;
+  }
+
+  .nav-icons span{
+    display: block;
+    width: 100%;
+  }
+
+  input,
+  select,
+  button{
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .modal-content{
+    width: 95%;
+    margin: 20% auto;
+  }
+
+}
