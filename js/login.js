@@ -1,4 +1,4 @@
-const BASE_URL = "https://zips-recoil-professor.ngrok-free.dev/api/v1/order";
+const BASE_URL = "http://13.126.101.98:8080/api/v1/order";
 
 function login(event) {
 
