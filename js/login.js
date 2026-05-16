@@ -1,4 +1,4 @@
-const BASE_URL = "https://laundaryserver.duckdns.org/api/v1/order";
+const BASE_URL = "http://13.234.136.7:8080/api/v1/order";
 
 function login(event) {
 
