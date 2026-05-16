@@ -1,4 +1,4 @@
-const BASE_URL = "http://13.126.101.98:8080/api/v1/order";
+const BASE_URL = "https://laundaryserver.duckdns.org/api/v1/order";
 
 //automatically load orders 
 document.addEventListener("DOMContentLoaded", () => {
