@@ -207,9 +207,9 @@ button:hover{
   text-decoration:underline;
 }
 
-/* Mobile */c
+/* Mobile */
 
-@media (max-width:480px){
+@media(max-width:480px){
 
   .login-card{
     padding:25px;
