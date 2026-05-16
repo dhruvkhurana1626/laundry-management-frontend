@@ -325,7 +325,7 @@ button {
 
 /* RESPONSIVE */
 
-@media (max-width: 240px) {
+@media (max-width: 800px) {
 
   .dashboard-top,
   .dashboard-bottom {

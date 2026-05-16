@@ -289,7 +289,7 @@ td {
 
 /* RESPONSIVE */
 
-@media (max-width: 240px) {
+@media (max-width: 800px) {
 
   .hide-mobile {
 

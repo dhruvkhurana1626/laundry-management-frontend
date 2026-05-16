@@ -209,7 +209,7 @@ button:hover{
 
 /* Mobile */
 
-@media(max-width:240px){
+@media(max-width:800px){
 
   .login-card{
     padding:25px;
