@@ -1,338 +1,280 @@
-/* Page Header */
+/* =========================
+   orders.css
+========================= */
 
-.page-title {
+.page-title{
 
-  color: white;
+  color:white;
 
-  margin-bottom: 4px;
+  font-size:28px;
 
-  font-size: 28px;
+  margin-bottom:4px;
 }
 
-.page-subtitle {
+.page-subtitle{
 
-  color: rgba(255,255,255,0.9);
+  color:rgba(255,255,255,0.9);
 
-  font-size: 13px;
+  font-size:13px;
 }
 
 /* Sections */
 
 .search-section,
-.table-section {
+.table-section{
 
-  background: white;
+  background:white;
 
-  padding: 22px;
+  padding:22px;
 
-  border-radius: 16px;
+  border-radius:16px;
 
-  margin-bottom: 24px;
+  margin-bottom:24px;
 
   box-shadow:
-  0 4px 20px rgba(0,0,0,0.08);
+    0 4px 20px rgba(0,0,0,0.08);
 }
 
-/* Search Header */
+/* Search */
 
-.search-header {
-
-  margin-bottom: 18px;
+.search-header{
+  margin-bottom:18px;
 }
 
-.search-header h2 {
+.search-header h2{
 
-  margin-bottom: 5px;
+  color:#2d89ff;
 
-  color: #2d89ff;
+  margin-bottom:5px;
 }
 
-.search-header p {
+.search-header p{
 
-  color: #666;
+  color:#666;
 
-  font-size: 14px;
+  font-size:14px;
 }
 
-/* Search Container */
+.search-container{
 
-.search-container {
+  display:flex;
 
-  display: flex;
+  gap:12px;
 
-  gap: 12px;
+  align-items:center;
 
-  align-items: center;
-
-  flex-wrap: wrap;
+  flex-wrap:wrap;
 }
 
 .search-container input,
-.search-container select {
+.search-container select{
 
-  flex: 1;
+  flex:1;
 
-  min-width: 180px;
-
-  padding: 12px;
-
-  border: 1px solid #ccc;
-
-  border-radius: 10px;
-
-  transition: 0.2s;
+  min-width:180px;
 }
 
-.search-container input:focus,
-.search-container select:focus {
+.search-container button{
 
-  outline: none;
+  padding:12px 18px;
 
-  border-color: #2d89ff;
+  background:#2d89ff;
 
-  box-shadow:
-  0 0 0 3px rgba(45,137,255,0.12);
-}
-
-.search-container button {
-
-  padding: 12px 20px;
-
-  border-radius: 10px;
+  color:white;
 }
 
 /* Table */
 
-.table-wrapper {
-
-  overflow-x: auto;
+.table-wrapper{
+  overflow-x:auto;
 }
 
-table {
+table{
 
-  width: 100%;
+  width:100%;
 
-  border-collapse: collapse;
+  border-collapse:collapse;
 
-  background: white;
+  min-width:850px;
+
+  background:white;
 }
 
-/* Table Header */
-
-th {
+th{
 
   background:
-  linear-gradient(
-    135deg,
-    #2d89ff,
-    #1b6fe0
-  );
+    linear-gradient(
+      135deg,
+      #2d89ff,
+      #1b6fe0
+    );
 
-  color: white;
+  color:white;
 
-  padding: 14px;
+  padding:14px;
 
-  text-align: center;
+  font-size:14px;
 
-  font-size: 14px;
+  text-align:center;
 }
 
-/* Table Data */
+td{
 
-td {
+  padding:14px;
 
-  padding: 14px;
+  border-bottom:1px solid #eee;
 
-  border-bottom: 1px solid #eee;
+  text-align:center;
 
-  text-align: center;
-
-  font-size: 14px;
+  font-size:14px;
 }
 
-/* Alternate Rows */
-
-#ordersTable tbody tr:nth-child(even) {
-
-  background: #f8fbff;
+#ordersTable tbody tr:nth-child(even){
+  background:#f8fbff;
 }
 
-#ordersTable tbody tr:hover {
-
-  background: #eef5ff;
-
-  transition: 0.2s;
+#ordersTable tbody tr:hover{
+  background:#eef5ff;
 }
 
-/* View Button */
+/* Buttons */
 
-.viewBtn {
+.viewBtn{
 
-  background: #2d89ff;
+  background:#2d89ff;
 
-  color: white;
+  color:white;
 
-  border: none;
-
-  padding: 8px 14px;
-
-  border-radius: 8px;
-
-  cursor: pointer;
+  padding:8px 14px;
 }
 
-.viewBtn:hover {
-
-  background: #1b6fe0;
+.viewBtn:hover{
+  background:#1b6fe0;
 }
 
-/* Delete Button */
+.deleteBtn{
 
-.deleteBtn {
+  background:#ff4d4d;
 
-  background: #ff4d4d;
+  color:white;
 
-  color: white;
-
-  border: none;
-
-  padding: 8px 12px;
-
-  border-radius: 8px;
-
-  cursor: pointer;
+  padding:8px 12px;
 }
 
-.deleteBtn:hover {
-
-  background: #d63031;
-}
-
-/* Modal */
-
-.modal-content {
-
-  border-radius: 16px;
-
-  max-width: 700px;
+.deleteBtn:hover{
+  background:#d63031;
 }
 
 /* Delete Modal */
 
-.delete-modal-content {
+.delete-modal-content{
 
-  max-width: 400px;
+  max-width:400px;
 
-  text-align: center;
+  text-align:center;
 }
 
-/* Delete Actions */
+.delete-actions{
 
-.delete-actions {
+  display:flex;
 
-  display: flex;
+  justify-content:center;
 
-  justify-content: center;
+  gap:12px;
 
-  gap: 12px;
+  margin-top:20px;
 
-  margin-top: 20px;
+  flex-wrap:wrap;
 }
 
-#confirmDeleteBtn {
+#confirmDeleteBtn{
 
-  background: #ff4d4d;
+  background:#ff4d4d;
 
-  color: white;
+  color:white;
 }
 
-#confirmDeleteBtn:hover {
-
-  background: #d63031;
+#confirmDeleteBtn:hover{
+  background:#d63031;
 }
 
-#cancelDeleteBtn {
+#cancelDeleteBtn{
 
-  background: #ddd;
+  background:#ddd;
 
-  color: black;
+  color:black;
 }
 
-/* Garments Table */
+/* Garment Table */
 
-.garment-table {
+.garment-table{
 
-  width: 100%;
+  width:100%;
 
-  margin-top: 10px;
+  margin-top:10px;
 
-  border-collapse: collapse;
+  border-collapse:collapse;
 }
 
 .garment-table th,
-.garment-table td {
+.garment-table td{
 
-  border: 1px solid #ddd;
+  border:1px solid #ddd;
 
-  padding: 10px;
+  padding:10px;
 }
 
 #backBtn{
-  background-color: rgb(36, 98, 244);
-  border: transparent 2px solid;
-  border-radius: 12px;
+
+  background:#2462f4;
+
+  color:white;
+
+  padding:10px 16px;
 }
 
 #backBtn:hover{
-  border: white 2px solid;
+  border:2px solid white;
 }
 
-/* RESPONSIVE */
+/* Mobile */
 
-@media (max-width: 800px) {
+@media(max-width:900px){
 
-  .hide-mobile {
-
-    display: none;
+  .top-bar{
+    text-align:center;
   }
 
-  .top-bar {
-
-    flex-direction: column;
-
-    gap: 15px;
-
-    text-align: center;
-  }
-
-  .search-container {
-
-    flex-direction: column;
+  .search-container{
+    flex-direction:column;
   }
 
   .search-container input,
   .search-container select,
-  .search-container button {
+  .search-container button{
+    width:100%;
+  }
 
-    width: 100%;
+  .table-wrapper{
+    overflow-x:auto;
+  }
+
+  table{
+    min-width:700px;
   }
 
   th,
-  td {
-
-    font-size: 12px;
-
-    padding: 10px;
+  td{
+    font-size:12px;
+    padding:10px;
   }
 
-  .modal-content {
-
-    width: 95%;
+  .modal-content{
+    width:100%;
   }
 
-  .page-title {
-
-    font-size: 24px;
+  .page-title{
+    font-size:24px;
   }
 
 }

@@ -336,6 +336,7 @@ button {
   .form-grid {
 
     grid-template-columns: 1fr;
+
   }
 
   #garments-container div {
