@@ -200,7 +200,7 @@ function openDetailsModal(order) {
     Update Status
     </button>
 
-    <button onclick="window.print()">
+    <button id="printBtn">
       Print
     </button>
 
@@ -208,6 +208,7 @@ function openDetailsModal(order) {
 
   modal.style.display = "block";
 
+  //update button listener
   document.getElementById("updateModalBtn")
   .addEventListener("click", () => {
 
@@ -215,6 +216,63 @@ function openDetailsModal(order) {
       document.getElementById("modalStatus").value;
 
     updateStatus(order.id, status);
+
+  });
+
+  //printBtn listener
+  document.getElementById("printBtn")
+  .addEventListener("click", () => {
+
+    const printContents =
+      document.getElementById("modalData").innerHTML;
+
+    const printWindow =
+      window.open("", "", "width=900,height=700");
+
+    printWindow.document.write(`
+
+      <html>
+        <head>
+          <title>Order Receipt</title>
+          <style>
+            body{
+              font-family: Arial;
+              padding: 20px;
+            }
+            h2,h3{
+              margin-bottom: 10px;
+            }
+            p{
+              margin: 6px 0;
+            }
+            table{
+              width: 100%;
+              border-collapse: collapse;
+              margin-top: 15px;
+            }
+            th, td{
+              border: 2px solid #000;
+              padding: 10px;
+              text-align: center;
+            }
+            button,
+            select{
+              display:none;
+            }
+          </style>
+
+        </head>
+        <body>
+          ${printContents}
+        </body>
+      </html>
+
+    `);
+
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
 
   });
 
