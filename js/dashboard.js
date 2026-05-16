@@ -1,4 +1,4 @@
-const BASE_URL = "http://13.234.136.7:8080/api/v1/dashboard";
+const BASE_URL = "https://dhruvlaundry.duckdns.org/api/v1/dashboard";
 
 // ---------- SAFE EVENT BINDING ----------
 
@@ -218,7 +218,7 @@ function createOrder() {
   createBtn.innerText = "Creating...";
 
   fetchWithAuth(
-    "http://13.234.136.7:8080/api/v1/order",
+    "https://dhruvlaundry.duckdns.org/api/v1/order",
     {
       method: "POST",
       body: JSON.stringify(data)
