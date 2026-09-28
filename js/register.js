@@ -1,5 +1,3 @@
-const API_BASE_URL = "http://13.205.57.206:8080";
-
 const registerForm = document.getElementById("registerForm");
 const registerMessage = document.getElementById("registerMessage");
 
