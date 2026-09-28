@@ -46,7 +46,7 @@ body {
 
     position: relative;
 
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 
@@ -119,13 +119,15 @@ body::after {
 .login-container {
     width: 100%;
 
-    flex: 1;
+    min-height: 100vh;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
-    padding: 20px;
+    padding: 30px 20px;
 
     position: relative;
 
@@ -516,64 +518,243 @@ body::after {
 
 
 /* ================================
-   FOOTER
+   DEVELOPER BADGE
 ================================ */
 
-.footer {
+.login-content {
     width: 100%;
-
-    padding: 20px;
-
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-
-    text-align: center;
-
-    font-size: 13px;
-
-    color: rgba(255, 255, 255, 0.55);
-
-    position: relative;
-
-    z-index: 2;
-}
-
-
-.footer p {
-    margin: 0;
-}
-
-
-.footer-links {
-    margin-top: 8px;
 
     display: flex;
 
-    justify-content: center;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+/* Main developer line */
+
+.developer-badge {
+    display: flex;
+
+    flex-direction: column;
+
     align-items: center;
 
     gap: 8px;
+
+    position: relative;
+
+    padding: 10px 22px;
+
+    border-radius: 50px;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 1px solid rgba(147, 197, 253, 0.18);
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.12),
+        inset 0 1px 1px rgba(255, 255, 255, 0.08);
+
+    animation:
+        developerFloat 4s ease-in-out infinite,
+        developerAppear 0.8s ease-out;
+
+    z-index: 5;
 }
 
 
-.footer-links a {
-    color: #bfdbfe;
+/* Animated glow */
+
+.developer-badge::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -1px;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(96, 165, 250, 0.5),
+            transparent
+        );
+
+    opacity: 0;
+
+    animation: developerGlow 3s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+
+/* Built by line */
+
+.developer-line {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    color: rgba(255, 255, 255, 0.6);
+
+    font-size: 12px;
+
+    letter-spacing: 0.3px;
+}
+
+
+.developer-name {
+    color: #dbeafe;
+
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* Small glowing dots */
+
+.line-dot {
+    width: 5px;
+
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #60a5fa;
+
+    box-shadow:
+        0 0 8px rgba(96, 165, 250, 0.8);
+
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+
+.line-dot:last-child {
+    animation-delay: 1s;
+}
+
+
+/* Links */
+
+.developer-links {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 11px;
+}
+
+
+.developer-link {
+    color: #93c5fd;
 
     text-decoration: none;
 
-    transition: color 0.2s ease;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
 
-.footer-links a:hover {
+.developer-link:hover {
     color: white;
+
+    transform: translateY(-1px);
 
     text-decoration: underline;
 }
 
 
-.footer-links span {
-    color: rgba(255, 255, 255, 0.35);
+.developer-divider {
+    color: rgba(255, 255, 255, 0.25);
 }
+
+
+/* ================================
+   DEVELOPER ANIMATIONS
+================================ */
+
+@keyframes developerFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+
+@keyframes developerAppear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-15px)
+            scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+@keyframes developerGlow {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+
+@keyframes dotPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.4);
+
+        opacity: 1;
+    }
+}
+
 
 
 /* ================================
@@ -583,42 +764,53 @@ body::after {
 @media (max-width: 480px) {
 
     body {
-        min-height: 100vh;
+        min-height: 100dvh;
+        overflow: hidden;
     }
-
 
     .login-container {
-        padding: 20px 15px;
+        min-height: 100dvh;
+
+        padding: 18px 15px;
     }
 
+    .login-container {
+        padding: 18px 15px;
+    }
+
+    .login-content {
+        gap: 12px;
+    }
+
+    .developer-badge {
+        padding: 9px 18px;
+    }
+
+    .developer-line {
+        font-size: 11px;
+    }
+
+    .developer-links {
+        font-size: 10px;
+    }
 
     .login-card {
         padding: 30px 24px;
-
         border-radius: 16px;
     }
-
 
     .login-card h1 {
         font-size: 24px;
     }
 
-
     .subtitle {
         margin-bottom: 25px;
     }
-
 
     .form-group input,
     .password-wrapper input {
         font-size: 16px;
     }
-
-
-    .footer {
-        padding: 15px;
-    }
-
 
     .password-toggle {
         right: 8px;
@@ -692,8 +884,4 @@ body::after {
         gap: 5px;
     }
 
-
-    .footer {
-        font-size: 12px;
-    }
 }

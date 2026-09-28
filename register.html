@@ -3,7 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Create Account - Laundry Management System</title>
 
@@ -15,116 +19,204 @@
 
     <div class="register-container">
 
-        <div class="register-card">
+        <div class="register-content">
 
-            <h1>Create Account</h1>
+            <!-- =========================
+                 DEVELOPER BADGE
+            ========================== -->
 
-            <p class="subtitle">
-                Create your seller account
-            </p>
+            <div class="developer-badge">
 
-            <form id="registerForm">
+                <div class="developer-line">
 
-                <div class="form-group">
+                    <span class="line-dot"></span>
 
-                    <label for="name">Name</label>
+                    <span>Built by</span>
 
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Enter your name"
-                        required
+                    <span class="developer-name">
+                        Dhruv Khurana
+                    </span>
+
+                    <span class="line-dot"></span>
+
+                </div>
+
+
+                <div class="developer-links">
+
+                    <a
+                        href="mailto:dhruvkhurana1626@gmail.com"
+                        class="developer-link"
                     >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="email">Email</label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="password">Password</label>
-
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Create a password"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="confirmPassword">Confirm Password</label>
-
-                    <div class="password-wrapper">
-                        <input type="password" id="confirmPassword" placeholder="Confirm your password">
-                        <button type="button" id="toggleConfirmPassword" class="password-toggle">👁</button>
-                    </div>
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="register-button"
-                >
-                    Create Account
-                </button>
-
-                <p
-                    id="registerMessage"
-                    class="message"
-                ></p>
-
-            </form>
-
-
-            <div class="auth-links">
-
-                <span>Already have an account?</span>
-
-                <a href="login.html">
-                    Login
-                </a>
-
-            </div>
-
-
-            <div class="footer">
-
-                <p>Developed by Dhruv Khurana</p>
-
-                <div class="footer-links">
-
-                    <a href="mailto:dhruvkhurana1626@gmail.com">
                         Gmail
                     </a>
 
-                    <span>|</span>
+                    <span class="developer-divider">
+                        •
+                    </span>
 
                     <a
                         href="https://www.linkedin.com/in/dhruv-khurana-756726219/"
                         target="_blank"
+                        rel="noopener noreferrer"
+                        class="developer-link"
                     >
                         LinkedIn
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 REGISTER CARD
+            ========================== -->
+
+            <div class="register-card">
+
+                <h1>
+                    Create Account
+                </h1>
+
+
+                <p class="subtitle">
+                    Create your seller account
+                </p>
+
+
+                <form id="registerForm">
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create a password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                id="togglePassword"
+                                class="password-toggle"
+                                aria-label="Show password"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Confirm your password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                id="toggleConfirmPassword"
+                                class="password-toggle"
+                                aria-label="Show password"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- REGISTER BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="register-button"
+                    >
+                        Create Account
+                    </button>
+
+
+                    <p
+                        id="registerMessage"
+                        class="message"
+                    ></p>
+
+                </form>
+
+
+                <!-- LOGIN LINK -->
+
+                <div class="auth-links">
+
+                    <span>
+                        Already have an account?
+                    </span>
+
+                    <a href="login.html">
+                        Login
                     </a>
 
                 </div>
@@ -134,6 +226,7 @@
         </div>
 
     </div>
+
 
     <script src="/js/api.js"></script>
     <script src="/js/register.js"></script>
