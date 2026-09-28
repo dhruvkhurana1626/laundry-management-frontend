@@ -41,6 +41,61 @@ function checkPasswords() {
     }
 }
 
+// ================================
+// PASSWORD TOGGLES
+// ================================
+
+const togglePassword =
+    document.getElementById("togglePassword");
+
+const toggleConfirmPassword =
+    document.getElementById("toggleConfirmPassword");
+
+
+function setupPasswordToggle(input, button) {
+
+    if (!input || !button) {
+        return;
+    }
+
+    button.addEventListener("click", function () {
+
+        if (input.type === "password") {
+
+            input.type = "text";
+
+            button.textContent = "🙈";
+
+            button.setAttribute(
+                "aria-label",
+                "Hide password"
+            );
+
+        } else {
+
+            input.type = "password";
+
+            button.textContent = "👁";
+
+            button.setAttribute(
+                "aria-label",
+                "Show password"
+            );
+        }
+    });
+}
+
+
+setupPasswordToggle(
+    passwordInput,
+    togglePassword
+);
+
+setupPasswordToggle(
+    confirmPasswordInput,
+    toggleConfirmPassword
+);
+
 
 passwordInput.addEventListener("input", checkPasswords);
 

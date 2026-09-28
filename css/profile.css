@@ -1,8 +1,22 @@
+/* ================================
+   RESET
+================================ */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+
+/* ================================
+   BODY
+================================ */
 
 body {
     min-height: 100vh;
@@ -10,21 +24,39 @@ body {
     font-family: Arial, sans-serif;
 
     background:
-        radial-gradient(circle at top left, #3b82f6, transparent 30%),
-        radial-gradient(circle at bottom right, #1d4ed8, transparent 30%),
-        linear-gradient(135deg, #0f172a, #1e3a8a);
+        radial-gradient(
+            circle at top left,
+            #3b82f6,
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #1d4ed8,
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #0f172a,
+            #1e3a8a
+        );
 
     color: #f8fafc;
+
+    overflow-x: hidden;
 }
 
 
-/* Navbar */
+/* ================================
+   NAVBAR
+================================ */
 
 .navbar {
-    height: 70px;
+    min-height: 70px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     padding: 0 50px;
@@ -34,21 +66,36 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
     backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    position: relative;
+
+    z-index: 10;
 }
+
 
 .logo {
     font-size: 20px;
+
     font-weight: 700;
+
+    white-space: nowrap;
 }
+
 
 .navbar nav {
     display: flex;
+
     align-items: center;
+
     gap: 25px;
 }
 
+
 .navbar a {
     color: #cbd5e1;
+
     text-decoration: none;
 
     font-size: 15px;
@@ -56,10 +103,12 @@ body {
     transition: 0.2s;
 }
 
+
 .navbar a:hover,
 .navbar a.active {
     color: white;
 }
+
 
 .navbar button {
     border: none;
@@ -69,19 +118,31 @@ body {
     border-radius: 8px;
 
     background: #ef4444;
+
     color: white;
 
     cursor: pointer;
 
-    transition: 0.2s;
+    font-size: 14px;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
+
 
 .navbar button:hover {
     background: #dc2626;
+
+    transform: translateY(-1px);
 }
 
 
-/* Main */
+/* ================================
+   MAIN
+================================ */
 
 .profile-container {
     width: min(1000px, 92%);
@@ -91,24 +152,31 @@ body {
     padding-bottom: 60px;
 }
 
+
 .profile-header {
     margin-bottom: 30px;
 }
 
+
 .profile-header h1 {
     font-size: 32px;
+
     margin-bottom: 8px;
 }
 
+
 .profile-header p {
     color: #cbd5e1;
+
+    font-size: 15px;
 }
 
 
-/* Cards */
+/* ================================
+   CARDS
+================================ */
 
 .profile-card {
-
     margin-bottom: 25px;
 
     padding: 30px;
@@ -121,13 +189,17 @@ body {
 
     backdrop-filter: blur(15px);
 
+    -webkit-backdrop-filter: blur(15px);
+
     box-shadow:
         0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
+
 .section-header {
     margin-bottom: 25px;
 }
+
 
 .section-header h2 {
     font-size: 21px;
@@ -135,17 +207,21 @@ body {
     margin-bottom: 6px;
 }
 
+
 .section-header p {
     color: #94a3b8;
 
     font-size: 14px;
+
+    line-height: 1.5;
 }
 
 
-/* Form */
+/* ================================
+   FORM
+================================ */
 
 .form-grid {
-
     display: grid;
 
     grid-template-columns: 1fr 1fr;
@@ -153,27 +229,38 @@ body {
     gap: 20px;
 }
 
+
 .form-group {
     display: flex;
 
     flex-direction: column;
 
     gap: 8px;
+
+    min-width: 0;
 }
+
 
 .full-width {
     grid-column: 1 / -1;
 }
 
+
 .form-group label {
     font-size: 14px;
 
     color: #cbd5e1;
+
+    font-weight: 600;
 }
+
+
+/* ================================
+   INPUTS
+================================ */
 
 .form-group input,
 .form-group textarea {
-
     width: 100%;
 
     padding: 13px 14px;
@@ -186,35 +273,58 @@ body {
 
     color: white;
 
-    font-size: 14px;
+    /*
+       16px prevents iPhone Safari
+       from zooming when the field is focused.
+    */
+    font-size: 16px;
+
+    font-family: Arial, sans-serif;
 
     outline: none;
 
-    transition: 0.2s;
+    -webkit-appearance: none;
+
+    appearance: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
+
 
 .form-group textarea {
     resize: vertical;
+
+    min-height: 100px;
+
+    line-height: 1.5;
 }
+
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: #64748b;
 }
 
+
 .form-group input:focus,
 .form-group textarea:focus {
-
     border-color: #60a5fa;
 
-    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+    background: rgba(15, 23, 42, 0.7);
+
+    box-shadow:
+        0 0 0 3px rgba(96, 165, 250, 0.15);
 }
 
 
-/* Read-only */
+/* ================================
+   READ-ONLY
+================================ */
 
 .form-group input:read-only {
-
     background: rgba(15, 23, 42, 0.8);
 
     color: #94a3b8;
@@ -223,10 +333,11 @@ body {
 }
 
 
-/* Actions */
+/* ================================
+   ACTIONS
+================================ */
 
 .form-actions {
-
     display: flex;
 
     align-items: center;
@@ -236,8 +347,8 @@ body {
     margin-top: 10px;
 }
 
-.save-button {
 
+.save-button {
     border: none;
 
     padding: 13px 25px;
@@ -254,11 +365,14 @@ body {
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.save-button:hover {
 
+.save-button:hover {
     background: #1d4ed8;
 
     transform: translateY(-1px);
@@ -267,8 +381,13 @@ body {
         0 8px 20px rgba(37, 99, 235, 0.35);
 }
 
-.save-button:disabled {
 
+.save-button:active {
+    transform: translateY(0);
+}
+
+
+.save-button:disabled {
     background: #64748b;
 
     cursor: not-allowed;
@@ -278,101 +397,289 @@ body {
     box-shadow: none;
 }
 
-.message {
 
+.message {
     font-size: 14px;
 
     color: #93c5fd;
+
+    line-height: 1.4;
 }
 
 
-/* Mobile */
+/* ================================
+   MOBILE
+================================ */
 
 @media (max-width: 700px) {
 
     .navbar {
-        height: auto;
+        min-height: auto;
 
         padding: 18px 20px;
 
         flex-direction: column;
 
-        gap: 15px;
+        gap: 14px;
 
         align-items: stretch;
     }
+
 
     .logo {
         text-align: center;
+
+        font-size: 19px;
     }
+
 
     .navbar nav {
+        display: grid;
 
-        display: flex;
+        grid-template-columns:
+            repeat(3, 1fr);
 
-        justify-content: center;
-
-        align-items: center;
-
-        flex-wrap: wrap;
-
-        gap: 10px;
-    }
-
-    .navbar a {
-
-        display: block;
-
-        padding: 8px 10px;
-
-        font-size: 14px;
-    }
-
-    .navbar button {
-
-        padding: 8px 12px;
-
-        font-size: 14px;
-    }
-
-
-    .profile-container {
-
-        width: 92%;
-
-        margin-top: 30px;
-    }
-
-
-    .form-grid {
-
-        grid-template-columns: 1fr;
-    }
-
-
-    .full-width {
-
-        grid-column: auto;
-    }
-
-
-    .profile-card {
-
-        padding: 22px;
-    }
-
-
-    .form-actions {
-
-        flex-direction: column;
-
-        align-items: stretch;
-    }
-
-
-    .save-button {
+        gap: 8px;
 
         width: 100%;
     }
 
+
+    .navbar a {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-height: 38px;
+
+        padding: 7px 5px;
+
+        font-size: 13px;
+    }
+
+
+    .navbar button {
+        grid-column: 1 / -1;
+
+        justify-self: center;
+
+        width: 200px;
+
+        min-height: 40px;
+
+        padding: 8px 16px;
+
+        border-radius: 8px;
+
+        font-size: 14px;
+    }
+
+
+    /* =========================
+       PROFILE
+    ========================= */
+
+    .profile-container {
+        width: calc(100% - 24px);
+
+        margin: 30px auto;
+
+        padding-bottom: 40px;
+    }
+
+
+    .profile-header {
+        margin-bottom: 20px;
+    }
+
+
+    .profile-header h1 {
+        font-size: 27px;
+
+        margin-bottom: 6px;
+    }
+
+
+    .profile-header p {
+        font-size: 14px;
+
+        line-height: 1.5;
+    }
+
+
+    /* =========================
+       CARDS
+    ========================= */
+
+    .profile-card {
+        padding: 22px 18px;
+
+        margin-bottom: 18px;
+
+        border-radius: 16px;
+    }
+
+
+    .section-header {
+        margin-bottom: 20px;
+    }
+
+
+    .section-header h2 {
+        font-size: 19px;
+    }
+
+
+    .section-header p {
+        font-size: 13px;
+    }
+
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .form-grid {
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+    }
+
+
+    .full-width {
+        grid-column: auto;
+    }
+
+
+    .form-group {
+        gap: 7px;
+    }
+
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px;
+
+        padding: 12px 13px;
+
+        border-radius: 8px;
+    }
+
+
+    .form-group textarea {
+        min-height: 110px;
+    }
+
+
+    /* =========================
+       ACTIONS
+    ========================= */
+
+    .form-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 12px;
+
+        margin-top: 5px;
+    }
+
+
+    .save-button {
+        width: 100%;
+
+        padding: 13px;
+    }
+
+
+    .message {
+        text-align: center;
+    }
+}
+
+
+/* ================================
+   SMALL MOBILE
+================================ */
+
+@media (max-width: 360px) {
+
+    .navbar {
+        padding: 15px 12px;
+
+        gap: 10px;
+    }
+
+
+    .logo {
+        font-size: 18px;
+    }
+
+
+    .navbar nav {
+        gap: 6px;
+    }
+
+
+    .navbar a {
+        font-size: 12px;
+
+        padding: 6px 3px;
+    }
+
+
+    .navbar button {
+        width: 180px;
+
+        min-height: 38px;
+
+        font-size: 12px;
+
+        padding: 6px 12px;
+    }
+
+
+    .profile-container {
+        width: calc(100% - 18px);
+
+        margin-top: 22px;
+    }
+
+
+    .profile-card {
+        padding: 20px 15px;
+
+        border-radius: 14px;
+    }
+
+
+    .profile-header h1 {
+        font-size: 24px;
+    }
+
+
+    .profile-header p {
+        font-size: 13px;
+    }
+
+
+    .section-header h2 {
+        font-size: 18px;
+    }
+
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px;
+
+        padding: 11px 12px;
+    }
 }

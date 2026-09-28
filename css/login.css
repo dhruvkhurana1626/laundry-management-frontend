@@ -8,6 +8,11 @@
     box-sizing: border-box;
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 
 /* ================================
    BODY
@@ -40,6 +45,8 @@ body {
         );
 
     position: relative;
+
+    overflow-x: hidden;
 }
 
 
@@ -147,7 +154,7 @@ body::after {
 
     backdrop-filter: blur(18px);
 
-    -webkit-backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(18px);
 
     box-shadow:
         0 25px 60px rgba(0, 0, 0, 0.25),
@@ -246,9 +253,17 @@ body::after {
 
     color: white;
 
-    font-size: 15px;
+    /*
+       IMPORTANT:
+       iPhone Safari zooms focused inputs
+       when their font-size is below 16px.
+    */
+    font-size: 16px;
 
     outline: none;
+
+    -webkit-appearance: none;
+    appearance: none;
 
     transition:
         border-color 0.3s ease,
@@ -291,6 +306,8 @@ body::after {
     width: 100%;
 
     padding-right: 48px;
+
+    font-size: 16px;
 }
 
 
@@ -327,6 +344,9 @@ body::after {
     cursor: pointer;
 
     padding: 0;
+
+    -webkit-appearance: none;
+    appearance: none;
 
     transition:
         color 0.2s ease,
@@ -384,6 +404,9 @@ body::after {
     position: relative;
 
     overflow: hidden;
+
+    -webkit-appearance: none;
+    appearance: none;
 
     transition:
         transform 0.25s ease,
@@ -487,6 +510,8 @@ body::after {
     color: #bfdbfe;
 
     font-size: 14px;
+
+    min-height: 18px;
 }
 
 
@@ -584,6 +609,12 @@ body::after {
     }
 
 
+    .form-group input,
+    .password-wrapper input {
+        font-size: 16px;
+    }
+
+
     .footer {
         padding: 15px;
     }
@@ -591,5 +622,78 @@ body::after {
 
     .password-toggle {
         right: 8px;
+    }
+}
+
+
+/* ================================
+   SMALL MOBILE
+================================ */
+
+@media (max-width: 360px) {
+
+    .login-container {
+        padding: 15px 10px;
+    }
+
+
+    .login-card {
+        padding: 24px 18px;
+
+        border-radius: 14px;
+    }
+
+
+    .login-card h1 {
+        font-size: 22px;
+    }
+
+
+    .subtitle {
+        font-size: 14px;
+
+        margin-bottom: 22px;
+    }
+
+
+    .form-group {
+        margin-bottom: 17px;
+    }
+
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+
+    .form-group input,
+    .password-wrapper input {
+        font-size: 16px;
+
+        padding: 12px;
+    }
+
+
+    .password-wrapper input {
+        padding-right: 45px;
+    }
+
+
+    .login-button {
+        padding: 12px;
+
+        font-size: 15px;
+    }
+
+
+    .auth-links {
+        font-size: 12px;
+
+        gap: 5px;
+    }
+
+
+    .footer {
+        font-size: 12px;
     }
 }

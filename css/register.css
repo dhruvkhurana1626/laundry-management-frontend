@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
     min-height: 100vh;
@@ -195,7 +200,11 @@ body::after {
 
     color: white;
 
-    font-size: 15px;
+    /*
+       Important:
+       iPhone Safari zooms inputs below 16px.
+    */
+    font-size: 16px;
 
     outline: none;
 
@@ -204,6 +213,13 @@ body::after {
         background 0.3s ease,
         box-shadow 0.3s ease,
         transform 0.2s ease;
+
+    /*
+       Prevent Safari from applying weird
+       native input styling.
+    */
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .form-group input::placeholder {
@@ -236,6 +252,12 @@ body::after {
     width: 100%;
 
     padding-right: 45px;
+
+    /*
+       Keep password inputs at 16px too.
+       Safari is particularly annoying here.
+    */
+    font-size: 16px;
 }
 
 .password-toggle {
@@ -261,6 +283,13 @@ body::after {
     line-height: 1;
 
     transition: color 0.2s ease;
+
+    /*
+       Don't let the eye button trigger
+       weird native button behavior.
+    */
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .password-toggle:hover {
@@ -298,6 +327,9 @@ body::after {
         transform 0.25s ease,
         box-shadow 0.25s ease,
         opacity 0.25s ease;
+
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .register-button:hover {
@@ -455,11 +487,74 @@ body::after {
         margin-bottom: 16px;
     }
 
-    .form-group input {
+    .form-group input,
+    .password-wrapper input {
+        /*
+           Keep this 16px.
+           This is the important Safari fix.
+        */
         font-size: 16px;
     }
 
     .footer {
         margin-top: 24px;
+    }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 360px) {
+
+    .register-container {
+        padding: 15px 10px;
+    }
+
+    .register-card {
+        padding: 24px 18px;
+
+        border-radius: 14px;
+    }
+
+    .register-card h1 {
+        font-size: 22px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    .form-group input,
+    .password-wrapper input {
+        font-size: 16px;
+
+        padding: 11px 12px;
+    }
+
+    .password-wrapper input {
+        padding-right: 42px;
+    }
+
+    .register-button {
+        padding: 12px;
+
+        font-size: 15px;
+    }
+
+    .auth-links {
+        font-size: 12px;
+
+        gap: 5px;
+    }
+
+    .footer {
+        font-size: 12px;
     }
 }
