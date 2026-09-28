@@ -10,11 +10,16 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+    <meta
+        name="description"
+        content="Laundry Management System dashboard for managing customer orders."
+    >
+
     <title>Dashboard - Laundry Management System</title>
 
     <link
         rel="stylesheet"
-        href="../css/dashboard.css"
+        href="/css/dashboard.css"
     >
 
 </head>
@@ -51,7 +56,10 @@
                 Profile
             </a>
 
-            <button id="logoutButton">
+            <button
+                type="button"
+                id="logoutButton"
+            >
                 Logout
             </button>
 
@@ -68,7 +76,9 @@
     <main class="dashboard-container">
 
 
-        <!-- Welcome -->
+        <!-- ============================= -->
+        <!-- WELCOME -->
+        <!-- ============================= -->
 
         <section class="welcome-section">
 
@@ -88,8 +98,8 @@
         <!-- STATISTICS -->
         <!-- ============================= -->
 
-
         <section class="stats-grid">
+
 
             <div class="stat-card total-card">
 
@@ -105,6 +115,7 @@
                 </span>
 
             </div>
+
 
 
             <div class="stat-card received-card">
@@ -123,6 +134,7 @@
             </div>
 
 
+
             <div class="stat-card delivered-card">
 
                 <span class="stat-title">
@@ -138,7 +150,9 @@
 
             </div>
 
-        </section>      
+
+        </section>
+
 
 
         <!-- ============================= -->
@@ -146,6 +160,7 @@
         <!-- ============================= -->
 
         <section class="orders-section">
+
 
             <!-- ============================= -->
             <!-- ORDER SEARCH -->
@@ -157,6 +172,7 @@
                     type="text"
                     id="orderSearchInput"
                     placeholder="Search by customer, phone or email..."
+                    autocomplete="off"
                 >
 
                 <button
@@ -177,6 +193,12 @@
 
             </div>
 
+
+
+            <!-- ============================= -->
+            <!-- SECTION HEADER -->
+            <!-- ============================= -->
+
             <div class="section-header">
 
                 <div>
@@ -193,6 +215,7 @@
 
 
                 <button
+                    type="button"
                     id="addOrderButton"
                     class="primary-button"
                 >
@@ -202,6 +225,10 @@
             </div>
 
 
+
+            <!-- ============================= -->
+            <!-- ORDERS TABLE -->
+            <!-- ============================= -->
 
             <div class="table-container">
 
@@ -246,13 +273,14 @@
 
                     <tbody id="ordersTableBody">
 
-                        <!-- Orders inserted by JS -->
+                        <!-- Orders inserted by JavaScript -->
 
                     </tbody>
 
                 </table>
 
             </div>
+
 
 
             <p
@@ -266,8 +294,6 @@
 
     </main>
 
-    
-
 
 
     <!-- ============================= -->
@@ -279,9 +305,12 @@
         class="modal-overlay"
     >
 
-
         <div class="order-modal">
 
+
+            <!-- ============================= -->
+            <!-- MODAL HEADER -->
+            <!-- ============================= -->
 
             <div class="modal-header">
 
@@ -299,9 +328,10 @@
 
 
                 <button
+                    type="button"
                     id="closeOrderModal"
                     class="close-button"
-                    type="button"
+                    aria-label="Close new order modal"
                 >
                     ×
                 </button>
@@ -310,15 +340,21 @@
 
 
 
-            <!-- Order Form -->
+            <!-- ============================= -->
+            <!-- ORDER FORM -->
+            <!-- ============================= -->
 
             <form id="orderForm">
 
 
-                <!-- Customer -->
+                <!-- ============================= -->
+                <!-- CUSTOMER DETAILS -->
+                <!-- ============================= -->
 
                 <div class="form-grid">
 
+
+                    <!-- Customer Name -->
 
                     <div class="form-group">
 
@@ -330,11 +366,15 @@
                             type="text"
                             id="customerName"
                             placeholder="Enter customer name"
+                            autocomplete="name"
                             required
                         >
 
                     </div>
 
+
+
+                    <!-- Phone -->
 
                     <div class="form-group">
 
@@ -347,11 +387,16 @@
                             id="phone"
                             placeholder="10 digit phone number"
                             maxlength="10"
+                            inputmode="numeric"
+                            autocomplete="tel"
                             required
                         >
 
                     </div>
 
+
+
+                    <!-- Email -->
 
                     <div class="form-group full-width">
 
@@ -363,6 +408,7 @@
                             type="email"
                             id="email"
                             placeholder="Enter customer email"
+                            autocomplete="email"
                             required
                         >
 
@@ -373,7 +419,9 @@
 
 
 
-                <!-- Garments -->
+                <!-- ============================= -->
+                <!-- GARMENTS -->
+                <!-- ============================= -->
 
                 <div class="garments-section">
 
@@ -383,6 +431,7 @@
                         <h3>
                             Garments
                         </h3>
+
 
                         <button
                             type="button"
@@ -400,7 +449,7 @@
                         class="garments-container"
                     >
 
-                        <!-- Garment rows added by JS -->
+                        <!-- Garment rows added by JavaScript -->
 
                     </div>
 
@@ -409,12 +458,20 @@
 
 
 
+                <!-- ============================= -->
+                <!-- ORDER MESSAGE -->
+                <!-- ============================= -->
+
                 <p
                     id="orderMessage"
                     class="order-message"
                 ></p>
 
 
+
+                <!-- ============================= -->
+                <!-- MODAL ACTIONS -->
+                <!-- ============================= -->
 
                 <div class="modal-actions">
 
@@ -445,288 +502,330 @@
 
     </div>
 
-<!-- ============================= -->
-<!-- VIEW ORDER MODAL -->
-<!-- ============================= -->
-
-<div
-    id="viewOrderModal"
-    class="modal-overlay"
->
-
-    <div class="order-modal view-order-modal">
 
 
-        <!-- Modal Header -->
+    <!-- ============================= -->
+    <!-- VIEW ORDER MODAL -->
+    <!-- ============================= -->
 
-        <div class="modal-header">
+    <div
+        id="viewOrderModal"
+        class="modal-overlay"
+    >
 
-            <div>
-
-                <h2>
-                    Order Details
-                </h2>
-
-                <p>
-                    Complete order information.
-                </p>
-
-            </div>
+        <div class="order-modal view-order-modal">
 
 
-            <button
-                id="closeViewOrderModal"
-                class="close-button"
-                type="button"
-            >
-                ×
-            </button>
+            <!-- ============================= -->
+            <!-- MODAL HEADER -->
+            <!-- ============================= -->
 
-        </div>
-
-
-        <!-- ============================= -->
-        <!-- ORDER INFORMATION -->
-        <!-- ============================= -->
-
-        <div class="order-details">
-
-
-            <div class="detail-item">
-
-                <span class="detail-label">
-                    Order ID
-                </span>
-
-                <strong id="viewOrderId">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="detail-item">
-
-                <span class="detail-label">
-                    Customer
-                </span>
-
-                <strong id="viewCustomerName">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="detail-item">
-
-                <span class="detail-label">
-                    Phone
-                </span>
-
-                <strong id="viewPhone">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="detail-item">
-
-                <span class="detail-label">
-                    Email
-                </span>
-
-                <strong id="viewEmail">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="detail-item">
-
-                <span class="detail-label">
-                    Status
-                </span>
-
-                <span
-                    id="viewStatus"
-                    class="order-status-display"
-                >
-                    -
-                </span>
-
-            </div>
-
-
-            <div class="detail-item">
-
-                <span class="detail-label">
-                    Total Amount
-                </span>
-
-                <strong id="viewTotalAmount">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="detail-item">
-
-                <span class="detail-label">
-                    Created At
-                </span>
-
-                <strong id="viewCreatedAt">
-                    -
-                </strong>
-
-            </div>
-
-
-        </div>
-
-
-        <!-- ============================= -->
-        <!-- UPDATE STATUS -->
-        <!-- ============================= -->
-
-        <div class="status-update-section">
-
-            <div class="status-update-header">
+            <div class="modal-header">
 
                 <div>
 
-                    <h3>
-                        Order Status
-                    </h3>
+                    <h2>
+                        Order Details
+                    </h2>
 
                     <p>
-                        Update the current order status.
+                        Complete order information.
                     </p>
 
                 </div>
-
-            </div>
-
-
-            <div class="status-update-controls">
-
-                <select id="orderStatusSelect">
-
-                    <option value="RECEIVED">
-                        RECEIVED
-                    </option>
-
-                    <option value="DELIVERED">
-                        DELIVERED
-                    </option>
-
-                </select>
 
 
                 <button
                     type="button"
-                    id="updateStatusButton"
-                    class="update-status-button"
+                    id="closeViewOrderModal"
+                    class="close-button"
+                    aria-label="Close order details modal"
                 >
-                    Update Status
+                    ×
                 </button>
 
             </div>
 
-        </div>
 
 
-        <!-- ============================= -->
-        <!-- GARMENTS -->
-        <!-- ============================= -->
+            <!-- ============================= -->
+            <!-- ORDER INFORMATION -->
+            <!-- ============================= -->
 
-        <div class="order-garments">
+            <div class="order-details">
 
-            <div class="garments-title">
 
-                <div>
+                <!-- Order ID -->
 
-                    <h3>
-                        Garments
-                    </h3>
+                <div class="detail-item">
 
-                    <p>
-                        Items included in this order.
-                    </p>
+                    <span class="detail-label">
+                        Order ID
+                    </span>
+
+                    <strong id="viewOrderId">
+                        -
+                    </strong>
+
+                </div>
+
+
+
+                <!-- Customer -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Customer
+                    </span>
+
+                    <strong id="viewCustomerName">
+                        -
+                    </strong>
+
+                </div>
+
+
+
+                <!-- Phone -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Phone
+                    </span>
+
+                    <strong id="viewPhone">
+                        -
+                    </strong>
+
+                </div>
+
+
+
+                <!-- Email -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Email
+                    </span>
+
+                    <strong id="viewEmail">
+                        -
+                    </strong>
+
+                </div>
+
+
+
+                <!-- Status -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Status
+                    </span>
+
+                    <span
+                        id="viewStatus"
+                        class="order-status-display"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+
+                <!-- Total Amount -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Total Amount
+                    </span>
+
+                    <strong id="viewTotalAmount">
+                        -
+                    </strong>
+
+                </div>
+
+
+
+                <!-- Created At -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Created At
+                    </span>
+
+                    <strong id="viewCreatedAt">
+                        -
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ============================= -->
+            <!-- UPDATE STATUS -->
+            <!-- ============================= -->
+
+            <div class="status-update-section">
+
+                <div class="status-update-header">
+
+                    <div>
+
+                        <h3>
+                            Order Status
+                        </h3>
+
+                        <p>
+                            Update the current order status.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="status-update-controls">
+
+                    <select
+                        id="orderStatusSelect"
+                        aria-label="Select order status"
+                    >
+
+                        <option value="RECEIVED">
+                            RECEIVED
+                        </option>
+
+                        <option value="DELIVERED">
+                            DELIVERED
+                        </option>
+
+                    </select>
+
+
+                    <button
+                        type="button"
+                        id="updateStatusButton"
+                        class="update-status-button"
+                    >
+                        Update Status
+                    </button>
 
                 </div>
 
             </div>
 
 
-            <div
-                id="viewGarments"
-                class="garment-details-list"
-            >
 
-                <!-- Garments added by JavaScript -->
+            <!-- ============================= -->
+            <!-- GARMENTS -->
+            <!-- ============================= -->
+
+            <div class="order-garments">
+
+
+                <div class="garments-title">
+
+                    <div>
+
+                        <h3>
+                            Garments
+                        </h3>
+
+                        <p>
+                            Items included in this order.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="viewGarments"
+                    class="garment-details-list"
+                >
+
+                    <!-- Garments added by JavaScript -->
+
+                </div>
+
 
             </div>
 
+
+
+            <!-- ============================= -->
+            <!-- ORDER ACTIONS -->
+            <!-- ============================= -->
+
+            <div class="modal-actions">
+
+
+                <button
+                    type="button"
+                    id="editOrderButton"
+                    class="secondary-button"
+                >
+                    Edit Order
+                </button>
+
+
+                <button
+                    type="button"
+                    id="printOrderButton"
+                    class="secondary-button"
+                >
+                    Print
+                </button>
+
+
+                <button
+                    type="button"
+                    id="whatsappOrderButton"
+                    class="whatsapp-button"
+                >
+                    WhatsApp
+                </button>
+
+
+            </div>
+
+
+
+            <button
+                type="button"
+                id="deleteOrderButton"
+                class="delete-order-button"
+            >
+                Delete Order
+            </button>
+
+
         </div>
-
-
-        <!-- ============================= -->
-        <!-- ACTIONS -->
-        <!-- ============================= -->
-
-        <div class="modal-actions">
-
-        <button
-            type="button"
-            id="editOrderButton"
-            class="secondary-button"
-        >
-            Edit Order
-        </button>
-
-        <button
-            type="button"
-            id="printOrderButton"
-            class="secondary-button"
-        >
-            Print
-        </button>
-
-        <button
-            type="button"
-            id="whatsappOrderButton"
-            class="whatsapp-button"
-        >
-            WhatsApp
-        </button>
-
-        </div>
-
-
-        <button
-            type="button"
-            id="deleteOrderButton"
-            class="delete-order-button"
-        >
-            Delete Order
-        </button>
 
     </div>
 
-</div>
 
+
+    <!-- ============================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================= -->
+
+    <script src="/js/api.js"></script>
+    <script src="/js/dashboard.js"></script>
     
-
-
-
-    <script src="../js/api.js"></script>
-
-    <script src="../js/dashboard.js"></script>
 
 </body>
 

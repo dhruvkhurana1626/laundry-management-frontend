@@ -1,6 +1,5 @@
-const API_BASE_URL = "http://13.205.57.206:8080";
-
-const profileForm = document.getElementById("profileForm");
+const profileForm =
+    document.getElementById("profileForm");
 
 const profileMessage =
     document.getElementById("profileMessage");
@@ -43,7 +42,9 @@ const gstNumberInput =
     document.getElementById("gstNumber");
 
 
-// Load profile
+// =========================
+// Load Profile
+// =========================
 
 async function loadProfile() {
 
@@ -68,10 +69,10 @@ async function loadProfile() {
             return;
         }
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         console.log("Profile:", data);
-
 
         nameInput.value =
             data.name || "";
@@ -103,10 +104,12 @@ async function loadProfile() {
         gstNumberInput.value =
             data.gstNumber || "";
 
-
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Load profile error:",
+            error
+        );
 
         profileMessage.textContent =
             "Unable to connect to the server.";
@@ -114,7 +117,9 @@ async function loadProfile() {
 }
 
 
-// Update profile
+// =========================
+// Update Profile
+// =========================
 
 profileForm.addEventListener(
     "submit",
@@ -124,36 +129,71 @@ profileForm.addEventListener(
 
         saveButton.disabled = true;
 
+        saveButton.textContent =
+            "Saving...";
+
         profileMessage.textContent =
             "Saving changes...";
 
 
-        const profileData = {
+        const profileData = {};
 
-            businessName:
-                businessNameInput.value.trim(),
+        const addIfNotEmpty = (key, input) => {
 
-            ownerName:
-                ownerNameInput.value.trim(),
+            const value =
+                input.value.trim();
 
-            phone:
-                phoneInput.value.trim(),
-
-            address:
-                addressInput.value.trim(),
-
-            city:
-                cityInput.value.trim(),
-
-            aboutBusiness:
-                aboutBusinessInput.value.trim(),
-
-            panNumber:
-                panNumberInput.value.trim(),
-
-            gstNumber:
-                gstNumberInput.value.trim()
+            if (value !== "") {
+                profileData[key] = value;
+            }
         };
+
+
+        addIfNotEmpty(
+            "businessName",
+            businessNameInput
+        );
+
+        addIfNotEmpty(
+            "ownerName",
+            ownerNameInput
+        );
+
+        addIfNotEmpty(
+            "phone",
+            phoneInput
+        );
+
+        addIfNotEmpty(
+            "address",
+            addressInput
+        );
+
+        addIfNotEmpty(
+            "city",
+            cityInput
+        );
+
+        addIfNotEmpty(
+            "aboutBusiness",
+            aboutBusinessInput
+        );
+
+        addIfNotEmpty(
+            "panNumber",
+            panNumberInput
+        );
+
+        addIfNotEmpty(
+            "gstNumber",
+            gstNumberInput
+        );
+
+
+        console.log(
+            "PATCH profile payload:",
+            profileData
+        );
 
 
         try {
@@ -163,7 +203,8 @@ profileForm.addEventListener(
                 {
                     method: "PATCH",
 
-                    body: JSON.stringify(profileData)
+                    body:
+                        JSON.stringify(profileData)
                 }
             );
 
@@ -173,7 +214,25 @@ profileForm.addEventListener(
             }
 
 
-            const data = await response.json();
+            const responseText =
+                await response.text();
+
+            let data = {};
+
+            try {
+
+                data =
+                    responseText
+                        ? JSON.parse(responseText)
+                        : {};
+
+            } catch (error) {
+
+                console.error(
+                    "Response is not JSON:",
+                    responseText
+                );
+            }
 
 
             if (response.ok) {
@@ -188,15 +247,26 @@ profileForm.addEventListener(
 
             } else {
 
+                console.error(
+                    "Profile update failed:",
+                    response.status,
+                    responseText
+                );
+
                 profileMessage.textContent =
                     data.message ||
+                    data.error ||
+                    responseText ||
                     "Unable to update profile.";
             }
 
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Update profile error:",
+                error
+            );
 
             profileMessage.textContent =
                 "Unable to connect to the server.";
@@ -204,24 +274,34 @@ profileForm.addEventListener(
         } finally {
 
             saveButton.disabled = false;
+
+            saveButton.textContent =
+                "Save Changes";
         }
 
     }
 );
 
 
+// =========================
 // Logout
+// =========================
 
-logoutButton.addEventListener(
-    "click",
-    function () {
+if (logoutButton) {
 
-        logoutUser();
+    logoutButton.addEventListener(
+        "click",
+        function () {
 
-    }
-);
+            logoutUser();
+
+        }
+    );
+}
 
 
-// Load profile when page opens
+// =========================
+// Initial Load
+// =========================
 
 loadProfile();

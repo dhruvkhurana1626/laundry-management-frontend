@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://13.205.57.206:8080";
+// ================================
+// DASHBOARD ELEMENTS
+// ================================
 
 const totalOrders =
     document.getElementById("totalOrders");
@@ -112,6 +114,7 @@ const orderStatusSelect =
 const updateStatusButton =
     document.getElementById("updateStatusButton");
 
+
 let selectedOrder = null;
 
 
@@ -136,27 +139,30 @@ const garmentTypes = [
 
 async function loadRecentOrders() {
 
+    dashboardMessage.textContent = "";
+
     try {
 
         const search =
-        orderSearchInput.value.trim();
+            orderSearchInput.value.trim();
 
         let url =
-            `${API_BASE_URL}/api/v1/order/recent?page=0&size=1`;
+            `${API_BASE_URL}/api/v1/order/recent?page=0&size=10`;
 
         if (search) {
 
             url =
                 `${API_BASE_URL}/api/v1/order?search=${encodeURIComponent(search)}&page=0`;
-
         }
 
-        const response = await apiRequest(
-            url,
-            {
-                method: "GET"
-            }
-        );
+
+        const response =
+            await apiRequest(
+                url,
+                {
+                    method: "GET"
+                }
+            );
 
 
         if (!response) {
@@ -165,6 +171,14 @@ async function loadRecentOrders() {
 
 
         if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+            console.error(
+                "Load orders failed:",
+                errorText
+            );
 
             dashboardMessage.textContent =
                 "Unable to load orders.";
@@ -178,7 +192,7 @@ async function loadRecentOrders() {
 
 
         console.log(
-            "Recent orders:",
+            "Orders:",
             orders
         );
 
@@ -200,25 +214,60 @@ async function loadRecentOrders() {
     }
 }
 
-searchOrderButton.addEventListener(
-    "click",
-    function () {
 
-        loadRecentOrders();
+// ================================
+// SEARCH
+// ================================
 
-    }
-);
+if (searchOrderButton) {
 
-clearSearchButton.addEventListener(
-    "click",
-    function () {
+    searchOrderButton.addEventListener(
+        "click",
+        function () {
 
-        orderSearchInput.value = "";
+            loadRecentOrders();
 
-        loadRecentOrders();
+        }
+    );
 
-    }
-);
+}
+
+
+if (clearSearchButton) {
+
+    clearSearchButton.addEventListener(
+        "click",
+        function () {
+
+            orderSearchInput.value = "";
+
+            loadRecentOrders();
+
+        }
+    );
+
+}
+
+
+if (orderSearchInput) {
+
+    orderSearchInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                loadRecentOrders();
+
+            }
+
+        }
+    );
+
+}
+
 
 // ================================
 // DISPLAY ORDERS
@@ -229,7 +278,10 @@ function displayOrders(orders) {
     ordersTableBody.innerHTML = "";
 
 
-    if (!orders || orders.length === 0) {
+    if (
+        !Array.isArray(orders) ||
+        orders.length === 0
+    ) {
 
         ordersTableBody.innerHTML = `
             <tr>
@@ -243,89 +295,92 @@ function displayOrders(orders) {
     }
 
 
-    orders.forEach(function (order) {
+    orders.forEach(
+        function (order) {
 
-        const row =
-            document.createElement("tr");
-
-
-        let statusClass =
-            "status-received";
+            const row =
+                document.createElement("tr");
 
 
-        if (order.orderStatus === "DELIVERED") {
-
-            statusClass =
-                "status-delivered";
-
-        }
+            let statusClass =
+                "status-received";
 
 
-        row.innerHTML = `
+            if (
+                order.orderStatus === "DELIVERED"
+            ) {
 
-            <td>
-                #${order.id}
-            </td>
-
-            <td>
-                ${escapeHtml(order.customerName)}
-            </td>
-
-            <td class="desktop-only">
-                ${escapeHtml(order.phone)}
-            </td>
-
-            <td>
-
-                <span
-                    class="status ${statusClass}"
-                >
-                    ${order.orderStatus}
-                </span>
-
-            </td>
-
-            <td class="desktop-only">
-                ₹${order.totalAmount}
-            </td>
-
-            <td>
-                ${formatDate(order.createdAt)}
-            </td>
-
-            <td>
-
-                <button
-                    type="button"
-                    class="view-order-button"
-                >
-                    View
-                </button>
-
-            </td>
-
-        `;
+                statusClass =
+                    "status-delivered";
+            }
 
 
-        const viewButton =
-            row.querySelector(
-                ".view-order-button"
+            row.innerHTML = `
+
+                <td>
+                    #${escapeHtml(order.id)}
+                </td>
+
+                <td>
+                    ${escapeHtml(order.customerName)}
+                </td>
+
+                <td class="desktop-only">
+                    ${escapeHtml(order.phone)}
+                </td>
+
+                <td>
+
+                    <span
+                        class="status ${statusClass}"
+                    >
+                        ${escapeHtml(order.orderStatus)}
+                    </span>
+
+                </td>
+
+                <td class="desktop-only">
+                    ₹${escapeHtml(order.totalAmount)}
+                </td>
+
+                <td>
+                    ${formatDate(order.createdAt)}
+                </td>
+
+                <td>
+
+                    <button
+                        type="button"
+                        class="view-order-button"
+                    >
+                        View
+                    </button>
+
+                </td>
+
+            `;
+
+
+            const viewButton =
+                row.querySelector(
+                    ".view-order-button"
+                );
+
+
+            viewButton.addEventListener(
+                "click",
+                function () {
+
+                    openOrderDetails(order);
+
+                }
             );
 
 
-        viewButton.addEventListener(
-            "click",
-            function () {
+            ordersTableBody.appendChild(row);
 
-                openOrderDetails(order);
-
-            }
-        );
-
-
-        ordersTableBody.appendChild(row);
-
-    });
+        }
+    );
 }
 
 
@@ -335,24 +390,46 @@ function displayOrders(orders) {
 
 function updateStats(orders) {
 
+    if (!Array.isArray(orders)) {
+
+        totalOrders.textContent = "0";
+
+        receivedOrders.textContent = "0";
+
+        deliveredOrders.textContent = "0";
+
+        return;
+    }
+
+
     totalOrders.textContent =
         orders.length;
 
 
     const received =
-        orders.filter(function (order) {
+        orders.filter(
+            function (order) {
 
-            return order.orderStatus === "RECEIVED";
+                return (
+                    order.orderStatus ===
+                    "RECEIVED"
+                );
 
-        }).length;
+            }
+        ).length;
 
 
     const delivered =
-        orders.filter(function (order) {
+        orders.filter(
+            function (order) {
 
-            return order.orderStatus === "DELIVERED";
+                return (
+                    order.orderStatus ===
+                    "DELIVERED"
+                );
 
-        }).length;
+            }
+        ).length;
 
 
     receivedOrders.textContent =
@@ -378,6 +455,11 @@ function formatDate(dateString) {
         new Date(dateString);
 
 
+    if (Number.isNaN(date.getTime())) {
+        return "-";
+    }
+
+
     return date.toLocaleDateString(
         "en-IN",
         {
@@ -395,7 +477,11 @@ function formatDate(dateString) {
 
 function escapeHtml(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
         return "";
     }
 
@@ -403,8 +489,10 @@ function escapeHtml(value) {
     const div =
         document.createElement("div");
 
+
     div.textContent =
-        value;
+        String(value);
+
 
     return div.innerHTML;
 }
@@ -414,24 +502,28 @@ function escapeHtml(value) {
 // CREATE ORDER MODAL
 // ================================
 
-addOrderButton.addEventListener(
-    "click",
-    function () {
+if (addOrderButton) {
 
-        orderForm.reset();
+    addOrderButton.addEventListener(
+        "click",
+        function () {
 
-        garmentsContainer.innerHTML = "";
+            orderForm.reset();
 
-        orderMessage.textContent = "";
+            garmentsContainer.innerHTML = "";
 
-        orderModal.classList.add(
-            "active"
-        );
+            orderMessage.textContent = "";
 
-        addGarmentRow();
+            orderModal.classList.add(
+                "active"
+            );
 
-    }
-);
+            addGarmentRow();
+
+        }
+    );
+
+}
 
 
 // ================================
@@ -452,16 +544,24 @@ function closeModal() {
 }
 
 
-closeOrderModal.addEventListener(
-    "click",
-    closeModal
-);
+if (closeOrderModal) {
+
+    closeOrderModal.addEventListener(
+        "click",
+        closeModal
+    );
+
+}
 
 
-cancelOrderButton.addEventListener(
-    "click",
-    closeModal
-);
+if (cancelOrderButton) {
+
+    cancelOrderButton.addEventListener(
+        "click",
+        closeModal
+    );
+
+}
 
 
 // ================================
@@ -473,22 +573,34 @@ function addGarmentRow(
     selectedQuantity = ""
 ) {
 
-    const selectedTypes = Array.from(
-        document.querySelectorAll(".garment-type")
-    )
-    .map(function (select) {
-        return select.value;
-    })
-    .filter(function (type) {
-        return type !== "";
-    });
+    const selectedTypes =
+        Array.from(
+            document.querySelectorAll(
+                ".garment-type"
+            )
+        )
+            .map(
+                function (select) {
+                    return select.value;
+                }
+            )
+            .filter(
+                function (type) {
+                    return type !== "";
+                }
+            );
 
 
     if (
         selectedType === "" &&
-        selectedTypes.length >= garmentTypes.length
+        selectedTypes.length >=
+            garmentTypes.length
     ) {
-        alert("All garment types have already been added.");
+
+        alert(
+            "All garment types have already been added."
+        );
+
         return;
     }
 
@@ -496,33 +608,55 @@ function addGarmentRow(
     const row =
         document.createElement("div");
 
-    row.className = "garment-row";
+
+    row.className =
+        "garment-row";
 
 
     row.innerHTML = `
 
-        <select class="garment-type">
+        <select
+            class="garment-type"
+            required
+        >
 
             <option value="">
                 Select garment
             </option>
 
-            ${garmentTypes.map(function (type) {
+            ${garmentTypes
+                .map(
+                    function (type) {
 
-                const alreadySelected =
-                    selectedTypes.includes(type);
+                        const alreadySelected =
+                            selectedTypes.includes(
+                                type
+                            );
 
-                return `
-                    <option
-                        value="${type}"
-                        ${type === selectedType ? "selected" : ""}
-                        ${alreadySelected && type !== selectedType ? "disabled" : ""}
-                    >
-                        ${type}
-                    </option>
-                `;
 
-            }).join("")}
+                        return `
+                            <option
+                                value="${type}"
+                                ${
+                                    type ===
+                                    selectedType
+                                        ? "selected"
+                                        : ""
+                                }
+                                ${
+                                    alreadySelected &&
+                                    type !== selectedType
+                                        ? "disabled"
+                                        : ""
+                                }
+                            >
+                                ${type}
+                            </option>
+                        `;
+
+                    }
+                )
+                .join("")}
 
         </select>
 
@@ -531,14 +665,17 @@ function addGarmentRow(
             type="number"
             class="garment-quantity"
             min="1"
+            step="1"
             placeholder="Quantity"
-            value="${selectedQuantity}"
+            value="${escapeHtml(selectedQuantity)}"
+            required
         >
 
 
         <button
             type="button"
             class="remove-garment-button"
+            aria-label="Remove garment"
         >
             ×
         </button>
@@ -565,7 +702,9 @@ function addGarmentRow(
 
 
     const garmentSelect =
-        row.querySelector(".garment-type");
+        row.querySelector(
+            ".garment-type"
+        );
 
 
     garmentSelect.addEventListener(
@@ -584,7 +723,10 @@ function addGarmentRow(
 }
 
 
-//Refresh Garment Options
+// ================================
+// REFRESH GARMENT OPTIONS
+// ================================
+
 function refreshGarmentOptions() {
 
     const selects =
@@ -595,265 +737,342 @@ function refreshGarmentOptions() {
 
     const selectedTypes =
         Array.from(selects)
-            .map(function (select) {
-                return select.value;
-            })
-            .filter(function (type) {
-                return type !== "";
-            });
-
-
-    selects.forEach(function (select) {
-
-        const currentValue =
-            select.value;
-
-
-        Array.from(select.options).forEach(
-            function (option) {
-
-                if (
-                    option.value === ""
-                ) {
-                    return;
+            .map(
+                function (select) {
+                    return select.value;
                 }
+            )
+            .filter(
+                function (type) {
+                    return type !== "";
+                }
+            );
 
 
-                option.disabled =
-                    selectedTypes.includes(
-                        option.value
-                    ) &&
-                    option.value !== currentValue;
+    selects.forEach(
+        function (select) {
 
-            }
-        );
+            const currentValue =
+                select.value;
 
-    });
+
+            Array.from(
+                select.options
+            ).forEach(
+                function (option) {
+
+                    if (
+                        option.value === ""
+                    ) {
+
+                        return;
+                    }
+
+
+                    option.disabled =
+                        selectedTypes.includes(
+                            option.value
+                        ) &&
+                        option.value !==
+                            currentValue;
+
+                }
+            );
+
+        }
+    );
 }
+
 
 // ================================
 // ADD GARMENT BUTTON
 // ================================
 
-addGarmentButton.addEventListener(
-    "click",
-    function () {
+if (addGarmentButton) {
 
-        addGarmentRow();
+    addGarmentButton.addEventListener(
+        "click",
+        function () {
 
-    }
-);
+            addGarmentRow();
+
+        }
+    );
+
+}
+
 
 // ================================
 // CREATE ORDER
 // ================================
 
-orderForm.addEventListener(
-    "submit",
-    async function (event) {
+if (orderForm) {
 
-        event.preventDefault();
+    orderForm.addEventListener(
+        "submit",
+        async function (event) {
 
-
-        const customerName =
-            document
-                .getElementById("customerName")
-                .value
-                .trim();
+            event.preventDefault();
 
 
-        const phone =
-            document
-                .getElementById("phone")
-                .value
-                .trim();
+            const customerName =
+                document
+                    .getElementById(
+                        "customerName"
+                    )
+                    .value
+                    .trim();
 
 
-        const email =
-            document
-                .getElementById("email")
-                .value
-                .trim();
+            const phone =
+                document
+                    .getElementById(
+                        "phone"
+                    )
+                    .value
+                    .trim();
 
 
-        const garmentRows =
-            document.querySelectorAll(
-                ".garment-row"
-            );
+            const email =
+                document
+                    .getElementById(
+                        "email"
+                    )
+                    .value
+                    .trim();
 
 
-        if (garmentRows.length === 0) {
-
-            orderMessage.textContent =
-                "Add at least one garment.";
-
-            return;
-        }
+            const garmentRows =
+                document.querySelectorAll(
+                    ".garment-row"
+                );
 
 
-        const garmentRequestList = [];
+            if (
+                garmentRows.length === 0
+            ) {
+
+                orderMessage.textContent =
+                    "Add at least one garment.";
+
+                return;
+            }
 
 
-        for (const row of garmentRows) {
+            const garmentRequestList = [];
 
-            const type =
-                row
-                    .querySelector(".garment-type")
-                    .value;
+            const selectedGarmentTypes =
+                new Set();
 
 
-            const quantity =
-                Number(
+            for (
+                const row of garmentRows
+            ) {
+
+                const type =
                     row
                         .querySelector(
-                            ".garment-quantity"
+                            ".garment-type"
                         )
-                        .value
-                );
+                        .value;
 
 
-            if (!type || quantity < 1) {
-
-                orderMessage.textContent =
-                    "Please enter valid garment details.";
-
-                return;
-            }
-
-
-            garmentRequestList.push({
-
-                type: type,
-
-                quantity: quantity
-
-            });
-
-        }
-
-
-        const orderData = {
-
-            customerName:
-                customerName,
-
-            phone:
-                phone,
-
-            email:
-                email,
-
-            garmentRequestList:
-                garmentRequestList
-
-        };
-
-
-        console.log(
-            "Creating order:",
-            orderData
-        );
-
-
-        createOrderButton.disabled =
-            true;
-
-        createOrderButton.textContent =
-            "Creating...";
-
-        orderMessage.textContent =
-            "Creating order...";
-
-
-        try {
-
-            const response =
-                await apiRequest(
-                    `${API_BASE_URL}/api/v1/order`,
-                    {
-                        method: "POST",
-
-                        body:
-                            JSON.stringify(
-                                orderData
+                const quantity =
+                    Number(
+                        row
+                            .querySelector(
+                                ".garment-quantity"
                             )
-                    }
-                );
+                            .value
+                    );
 
 
-            if (!response) {
-                return;
+                if (
+                    !type ||
+                    !Number.isInteger(quantity) ||
+                    quantity < 1
+                ) {
+
+                    orderMessage.textContent =
+                        "Please enter valid garment details.";
+
+                    return;
+                }
+
+
+                if (
+                    selectedGarmentTypes.has(
+                        type
+                    )
+                ) {
+
+                    orderMessage.textContent =
+                        `Duplicate garment type: ${type}`;
+
+                    return;
+                }
+
+
+                selectedGarmentTypes.add(type);
+
+
+                garmentRequestList.push({
+
+                    type: type,
+
+                    quantity: quantity
+
+                });
+
             }
 
 
-            if (!response.ok) {
+            const orderData = {
 
-                const errorData =
-                    await response.text();
+                customerName:
+                    customerName,
 
+                phone:
+                    phone,
 
-                console.error(
-                    "Create order failed:",
-                    errorData
-                );
+                email:
+                    email,
 
+                garmentRequestList:
+                    garmentRequestList
 
-                orderMessage.textContent =
-                    "Unable to create order.";
-
-                return;
-            }
-
-
-            const createdOrder =
-                await response.json();
+            };
 
 
             console.log(
-                "Created order:",
-                createdOrder
+                "Creating order:",
+                orderData
             );
 
-
-            orderMessage.textContent =
-                "Order created successfully.";
-
-
-            setTimeout(
-                function () {
-
-                    closeModal();
-
-                    loadRecentOrders();
-
-                },
-                700
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                "Create order error:",
-                error
-            );
-
-
-            orderMessage.textContent =
-                "Unable to connect to the server.";
-
-
-        } finally {
 
             createOrderButton.disabled =
-                false;
+                true;
+
 
             createOrderButton.textContent =
-                "Create Order";
-        }
+                "Creating...";
 
-    }
-);
+
+            orderMessage.textContent =
+                "Creating order...";
+
+
+            try {
+
+                const response =
+                    await apiRequest(
+                        `${API_BASE_URL}/api/v1/order`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    orderData
+                                )
+                        }
+                    );
+
+
+                if (!response) {
+                    return;
+                }
+
+
+                if (!response.ok) {
+
+                    const errorData =
+                        await response.text();
+
+
+                    console.error(
+                        "Create order failed:",
+                        errorData
+                    );
+
+
+                    orderMessage.textContent =
+                        errorData ||
+                        "Unable to create order.";
+
+                    return;
+                }
+
+
+                let createdOrder = null;
+
+
+                try {
+
+                    createdOrder =
+                        await response.json();
+
+                } catch (error) {
+
+                    console.log(
+                        "Order created without response body."
+                    );
+                }
+
+
+                console.log(
+                    "Created order:",
+                    createdOrder
+                );
+
+
+                orderMessage.textContent =
+                    "Order created successfully.";
+
+
+                await loadRecentOrders();
+
+
+                setTimeout(
+                    function () {
+
+                        closeModal();
+
+                    },
+                    500
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Create order error:",
+                    error
+                );
+
+
+                orderMessage.textContent =
+                    "Unable to connect to the server.";
+
+
+            } finally {
+
+                createOrderButton.disabled =
+                    false;
+
+                createOrderButton.textContent =
+                    "Create Order";
+
+            }
+
+        }
+    );
+
+}
 
 
 // ================================
@@ -867,33 +1086,40 @@ function openOrderDetails(order) {
 
 
     viewOrderId.textContent =
-        `#${order.id}`;
+        `#${escapeHtml(order.id)}`;
 
 
     viewCustomerName.textContent =
-        order.customerName;
+        order.customerName || "-";
 
 
     viewPhone.textContent =
-        order.phone;
+        order.phone || "-";
 
 
     viewEmail.textContent =
-        order.email;
+        order.email || "-";
 
 
     viewStatus.textContent =
-        order.orderStatus;
+        order.orderStatus || "-";
 
 
     viewTotalAmount.textContent =
-        `₹${order.totalAmount}`;
+        order.totalAmount !== null &&
+        order.totalAmount !== undefined
+            ? `₹${order.totalAmount}`
+            : "-";
 
 
     viewCreatedAt.textContent =
         formatDate(
             order.createdAt
         );
+
+
+    orderStatusSelect.value =
+        order.orderStatus || "RECEIVED";
 
 
     displayOrderGarments(
@@ -919,7 +1145,7 @@ function displayOrderGarments(
 
 
     if (
-        !garments ||
+        !Array.isArray(garments) ||
         garments.length === 0
     ) {
 
@@ -953,7 +1179,9 @@ function displayOrderGarments(
 
                 <span>
                     Quantity:
-                    ${garment.quantity}
+                    ${escapeHtml(
+                        garment.quantity
+                    )}
                 </span>
 
             `;
@@ -972,17 +1200,21 @@ function displayOrderGarments(
 // CLOSE VIEW MODAL
 // ================================
 
+function closeViewModal() {
+
+    viewOrderModal.classList.remove(
+        "active"
+    );
+
+    selectedOrder = null;
+}
+
+
 if (closeViewOrderModal) {
 
     closeViewOrderModal.addEventListener(
         "click",
-        function () {
-
-            viewOrderModal.classList.remove(
-                "active"
-            );
-
-        }
+        closeViewModal
     );
 
 }
@@ -999,7 +1231,8 @@ if (orderModal) {
         function (event) {
 
             if (
-                event.target === orderModal
+                event.target ===
+                orderModal
             ) {
 
                 closeModal();
@@ -1023,9 +1256,7 @@ if (viewOrderModal) {
                 viewOrderModal
             ) {
 
-                viewOrderModal.classList.remove(
-                    "active"
-                );
+                closeViewModal();
 
             }
 
@@ -1033,6 +1264,46 @@ if (viewOrderModal) {
     );
 
 }
+
+
+// ================================
+// ESC KEY
+// ================================
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key !== "Escape") {
+            return;
+        }
+
+
+        if (
+            orderModal &&
+            orderModal.classList.contains(
+                "active"
+            )
+        ) {
+
+            closeModal();
+
+        }
+
+
+        if (
+            viewOrderModal &&
+            viewOrderModal.classList.contains(
+                "active"
+            )
+        ) {
+
+            closeViewModal();
+
+        }
+
+    }
+);
 
 
 // ================================
@@ -1073,20 +1344,39 @@ if (whatsappOrderButton) {
             }
 
 
+            const garments =
+                Array.isArray(
+                    selectedOrder.garments
+                )
+                    ? selectedOrder.garments
+                    : [];
+
+
             const garmentText =
-                selectedOrder.garments
+                garments
                     .map(
                         function (garment) {
 
-                            return `${garment.type} x ${garment.quantity}`;
+                            return (
+                                `${garment.type} x ${garment.quantity}`
+                            );
 
                         }
                     )
                     .join("\n");
 
 
-            const message =
+            const phone =
+                String(
+                    selectedOrder.phone || ""
+                )
+                    .replace(
+                        /\D/g,
+                        ""
+                    );
 
+
+            const message =
 `Laundry Order #${selectedOrder.id}
 
 Customer: ${selectedOrder.customerName}
@@ -1100,12 +1390,15 @@ Total: ₹${selectedOrder.totalAmount}`;
 
 
             const whatsappUrl =
-                `https://wa.me/91${selectedOrder.phone}?text=${encodeURIComponent(message)}`;
+                `https://wa.me/91${phone}?text=${encodeURIComponent(
+                    message
+                )}`;
 
 
             window.open(
                 whatsappUrl,
-                "_blank"
+                "_blank",
+                "noopener,noreferrer"
             );
 
         }
@@ -1136,13 +1429,14 @@ if (editOrderButton) {
 
 
             /*
-             * The frontend button is ready.
+             * Edit Order UI is ready.
              *
-             * Actual saving requires a backend
-             * PATCH /api/v1/order/{id} endpoint.
+             * Actual saving requires:
              *
-             * We will connect this after that
-             * endpoint exists.
+             * PATCH /api/v1/order/{id}
+             *
+             * The current backend does not
+             * expose that endpoint yet.
              */
 
 
@@ -1155,242 +1449,256 @@ if (editOrderButton) {
 
 }
 
+
 // ================================
 // UPDATE ORDER STATUS
 // ================================
 
-updateStatusButton.addEventListener(
-    "click",
-    async function () {
+if (updateStatusButton) {
 
-        if (!selectedOrder) {
-            return;
-        }
+    updateStatusButton.addEventListener(
+        "click",
+        async function () {
 
-
-        const newStatus =
-            orderStatusSelect.value;
-
-
-        if (
-            newStatus ===
-            selectedOrder.orderStatus
-        ) {
-
-            return;
-        }
-
-
-        updateStatusButton.disabled = true;
-
-        updateStatusButton.textContent =
-            "Updating...";
-
-
-        try {
-
-            const response = await apiRequest(
-                `${API_BASE_URL}/api/v1/order/${selectedOrder.id}/status?status=${encodeURIComponent(newStatus)}`,
-                {
-                    method: "PUT"
-                }
-            );
-
-
-            if (!response) {
+            if (!selectedOrder) {
                 return;
             }
 
 
-            if (!response.ok) {
+            const newStatus =
+                orderStatusSelect.value;
 
-                const errorData =
-                    await response.text();
 
-                console.error(
-                    "Status update failed:",
-                    errorData
-                );
-
-                alert(
-                    "Unable to update order status."
-                );
+            if (
+                newStatus ===
+                selectedOrder.orderStatus
+            ) {
 
                 return;
             }
 
-
-            const updatedOrder =
-                await response.json();
-
-
-            console.log(
-                "Updated order:",
-                updatedOrder
-            );
-
-
-            // Update selected order
-
-            selectedOrder =
-                updatedOrder;
-
-
-            // Update status displayed
-            // inside the modal
-
-            viewStatus.textContent =
-                updatedOrder.orderStatus;
-
-
-            // Update dropdown
-
-            orderStatusSelect.value =
-                updatedOrder.orderStatus;
-
-
-            // Refresh dashboard orders
-
-            await loadRecentOrders();
-
-
-        } catch (error) {
-
-            console.error(
-                "Status update error:",
-                error
-            );
-
-            alert(
-                "Unable to connect to the server."
-            );
-
-
-        } finally {
 
             updateStatusButton.disabled =
-                false;
+                true;
+
 
             updateStatusButton.textContent =
-                "Update Status";
-        }
-
-    }
-);
-
-// ===============================
-// DELETE ORDER
-// ===============================
-deleteOrderButton.addEventListener(
-    "click",
-    async function () {
-
-        if (!selectedOrder) {
-            return;
-        }
+                "Updating...";
 
 
-        const confirmed =
-            confirm(
-                `Delete Order #${selectedOrder.id}?\n\nThis action cannot be undone.`
-            );
+            try {
+
+                const response =
+                    await apiRequest(
+                        `${API_BASE_URL}/api/v1/order/${selectedOrder.id}/status?status=${encodeURIComponent(newStatus)}`,
+                        {
+                            method: "PUT"
+                        }
+                    );
 
 
-        if (!confirmed) {
-            return;
-        }
+                if (!response) {
+                    return;
+                }
 
 
-        deleteOrderButton.disabled =
-            true;
+                if (!response.ok) {
 
-        deleteOrderButton.textContent =
-            "Deleting...";
+                    const errorData =
+                        await response.text();
 
 
-        try {
+                    console.error(
+                        "Status update failed:",
+                        errorData
+                    );
 
-            const response =
-                await apiRequest(
-                    `${API_BASE_URL}/api/v1/order/${selectedOrder.id}`,
-                    {
-                        method: "DELETE"
-                    }
+
+                    alert(
+                        errorData ||
+                        "Unable to update order status."
+                    );
+
+                    return;
+                }
+
+
+                const updatedOrder =
+                    await response.json();
+
+
+                console.log(
+                    "Updated order:",
+                    updatedOrder
                 );
 
 
-            if (!response) {
-                return;
-            }
+                selectedOrder =
+                    updatedOrder;
 
 
-            if (!response.ok) {
+                viewStatus.textContent =
+                    updatedOrder.orderStatus;
 
-                const errorData =
-                    await response.text();
+
+                orderStatusSelect.value =
+                    updatedOrder.orderStatus;
+
+
+                await loadRecentOrders();
+
+
+            } catch (error) {
 
                 console.error(
-                    "Delete order failed:",
-                    errorData
+                    "Status update error:",
+                    error
                 );
+
 
                 alert(
-                    "Unable to delete order."
+                    "Unable to connect to the server."
                 );
 
+
+            } finally {
+
+                updateStatusButton.disabled =
+                    false;
+
+                updateStatusButton.textContent =
+                    "Update Status";
+
+            }
+
+        }
+    );
+
+}
+
+
+// ================================
+// DELETE ORDER
+// ================================
+
+if (deleteOrderButton) {
+
+    deleteOrderButton.addEventListener(
+        "click",
+        async function () {
+
+            if (!selectedOrder) {
                 return;
             }
 
 
-            viewOrderModal.classList.remove(
-                "active"
-            );
+            const confirmed =
+                confirm(
+                    `Delete Order #${selectedOrder.id}?\n\nThis action cannot be undone.`
+                );
 
 
-            selectedOrder =
-                null;
+            if (!confirmed) {
+                return;
+            }
 
-
-            await loadRecentOrders();
-
-
-        } catch (error) {
-
-            console.error(
-                "Delete order error:",
-                error
-            );
-
-            alert(
-                "Unable to connect to the server."
-            );
-
-
-        } finally {
 
             deleteOrderButton.disabled =
-                false;
+                true;
+
 
             deleteOrderButton.textContent =
-                "Delete Order";
-        }
+                "Deleting...";
 
-    }
-);
+
+            try {
+
+                const response =
+                    await apiRequest(
+                        `${API_BASE_URL}/api/v1/order/${selectedOrder.id}`,
+                        {
+                            method: "DELETE"
+                        }
+                    );
+
+
+                if (!response) {
+                    return;
+                }
+
+
+                if (!response.ok) {
+
+                    const errorData =
+                        await response.text();
+
+
+                    console.error(
+                        "Delete order failed:",
+                        errorData
+                    );
+
+
+                    alert(
+                        errorData ||
+                        "Unable to delete order."
+                    );
+
+                    return;
+                }
+
+
+                closeViewModal();
+
+
+                await loadRecentOrders();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Delete order error:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to connect to the server."
+                );
+
+
+            } finally {
+
+                deleteOrderButton.disabled =
+                    false;
+
+                deleteOrderButton.textContent =
+                    "Delete Order";
+
+            }
+
+        }
+    );
+
+}
 
 
 // ================================
 // LOGOUT
 // ================================
 
-logoutButton.addEventListener(
-    "click",
-    function () {
+if (logoutButton) {
 
-        logoutUser();
+    logoutButton.addEventListener(
+        "click",
+        function () {
 
-    }
-);
+            logoutUser();
+
+        }
+    );
+
+}
 
 
 // ================================

@@ -1,5 +1,3 @@
-const API_BASE_URL = "http://13.205.57.206:8080";
-
 const pricingContainer =
     document.getElementById("pricingContainer");
 

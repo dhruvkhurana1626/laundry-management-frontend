@@ -1,60 +1,227 @@
-const API_BASE_URL = "http://13.205.57.206:8080";
+const loginForm =
+    document.getElementById("loginForm");
 
-const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
+const loginMessage =
+    document.getElementById("loginMessage");
 
-loginForm.addEventListener("submit", async function (event) {
+const passwordInput =
+    document.getElementById("password");
 
-    event.preventDefault();
+const togglePassword =
+    document.getElementById("togglePassword");
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+const loginButton =
+    loginForm.querySelector(".login-button");
 
-    loginMessage.textContent = "Logging in...";
 
-    try {
+// ================================
+// PASSWORD VISIBILITY TOGGLE
+// ================================
 
-        const response = await fetch(
-            `${API_BASE_URL}/api/v1/auth/login`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
+if (togglePassword) {
+
+    togglePassword.addEventListener(
+        "click",
+        function () {
+
+            if (passwordInput.type === "password") {
+
+                passwordInput.type = "text";
+
+                togglePassword.textContent = "🙈";
+
+                togglePassword.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+            } else {
+
+                passwordInput.type = "password";
+
+                togglePassword.textContent = "👁";
+
+                togglePassword.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
             }
-        );
 
-        const data = await response.json();
-
-        if (response.ok) {
-
-            sessionStorage.setItem(
-                "accessToken",
-                data.accessToken
-            );
-
-            sessionStorage.setItem(
-                "refreshToken",
-                data.refreshToken
-            );
-
-            window.location.href = "dashboard.html";
-
-        } else {
-
-            loginMessage.textContent =
-                data.message || "Invalid email or password.";
         }
+    );
+}
 
-    } catch (error) {
 
-        console.error(error);
+// ================================
+// LOGIN
+// ================================
+
+loginForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const email =
+            document.getElementById("email")
+                .value
+                .trim();
+
+        const password =
+            passwordInput.value;
+
 
         loginMessage.textContent =
-            "Unable to connect to the server.";
+            "Logging in...";
+
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+            "Logging in...";
+
+
+        try {
+
+            const response = await fetch(
+                `${API_BASE_URL}/api/v1/auth/login`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                }
+            );
+
+
+            /*
+             * =========================
+             * TOO MANY REQUESTS
+             * =========================
+             */
+
+            if (response.status === 429) {
+
+                let message =
+                    "Too many login attempts. Please try again later.";
+
+
+                try {
+
+                    const data =
+                        await response.json();
+
+                    message =
+                        data.message ||
+                        data.error ||
+                        message;
+
+                } catch (error) {
+
+                    // Backend returned non-JSON response.
+                }
+
+
+                loginMessage.textContent =
+                    message;
+
+                return;
+            }
+
+
+            /*
+             * =========================
+             * READ RESPONSE
+             * =========================
+             */
+
+            const responseText =
+                await response.text();
+
+
+            let data = {};
+
+            try {
+
+                data =
+                    responseText
+                        ? JSON.parse(responseText)
+                        : {};
+
+            } catch (error) {
+
+                console.error(
+                    "Login response is not JSON:",
+                    responseText
+                );
+            }
+
+
+            /*
+             * =========================
+             * SUCCESS
+             * =========================
+             */
+
+            if (response.ok) {
+
+                sessionStorage.setItem(
+                    "accessToken",
+                    data.accessToken
+                );
+
+                sessionStorage.setItem(
+                    "refreshToken",
+                    data.refreshToken
+                );
+
+
+                window.location.href =
+                    "dashboard.html";
+
+
+                return;
+            }
+
+
+            /*
+             * =========================
+             * OTHER ERRORS
+             * =========================
+             */
+
+            loginMessage.textContent =
+                data.message ||
+                data.error ||
+                responseText ||
+                "Invalid email or password.";
+
+        } catch (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+            loginMessage.textContent =
+                "Unable to connect to the server.";
+
+        } finally {
+
+            loginButton.disabled =
+                false;
+
+            loginButton.textContent =
+                "Login";
+        }
+
     }
-});
+);

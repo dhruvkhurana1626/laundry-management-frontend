@@ -1,3 +1,7 @@
+/* ================================
+   RESET
+================================ */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,8 +9,11 @@
 }
 
 
-body {
+/* ================================
+   BODY
+================================ */
 
+body {
     min-height: 100vh;
 
     font-family: Arial, sans-serif;
@@ -32,55 +39,41 @@ body {
 }
 
 
-
-/* ============================= */
-/* NAVBAR */
-/* ============================= */
+/* ================================
+   NAVBAR
+================================ */
 
 .navbar {
-
     min-height: 70px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     padding: 15px 50px;
 
-    background: rgba(
-        15,
-        23,
-        42,
-        0.75
-    );
+    background:
+        rgba(15, 23, 42, 0.75);
 
     border-bottom:
         1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.1
-        );
+        rgba(255, 255, 255, 0.1);
 
     backdrop-filter: blur(12px);
+
+    position: relative;
+    z-index: 10;
 }
 
 
 .logo {
-
     font-size: 20px;
-
     font-weight: 700;
 }
 
 
 .navbar nav {
-
     display: flex;
-
     align-items: center;
 
     gap: 25px;
@@ -88,7 +81,6 @@ body {
 
 
 .navbar a {
-
     color: #cbd5e1;
 
     text-decoration: none;
@@ -101,13 +93,11 @@ body {
 
 .navbar a:hover,
 .navbar a.active {
-
     color: white;
 }
 
 
 .navbar button {
-
     border: none;
 
     padding: 9px 16px;
@@ -125,22 +115,16 @@ body {
 
 
 .navbar button:hover {
-
     background: #dc2626;
 }
 
 
-
-/* ============================= */
-/* MAIN */
-/* ============================= */
+/* ================================
+   MAIN
+================================ */
 
 .dashboard-container {
-
-    width: min(
-        1100px,
-        92%
-    );
+    width: min(1100px, 92%);
 
     margin: 50px auto;
 
@@ -149,13 +133,11 @@ body {
 
 
 .welcome-section {
-
     margin-bottom: 30px;
 }
 
 
 .welcome-section h1 {
-
     font-size: 32px;
 
     margin-bottom: 8px;
@@ -163,25 +145,19 @@ body {
 
 
 .welcome-section p {
-
     color: #cbd5e1;
 }
 
 
-
-/* ============================= */
-/* STATS */
-/* ============================= */
+/* ================================
+   STATS
+================================ */
 
 .stats-grid {
-
     display: grid;
 
     grid-template-columns:
-        repeat(
-            3,
-            1fr
-        );
+        repeat(3, 1fr);
 
     gap: 20px;
 
@@ -190,7 +166,6 @@ body {
 
 
 .stat-card {
-
     padding: 25px;
 
     background:
@@ -226,7 +201,6 @@ body {
 
 
 .stat-title {
-
     display: block;
 
     color: #cbd5e1;
@@ -238,15 +212,16 @@ body {
 
 
 .stat-value {
-
     font-size: 30px;
 
     font-weight: 700;
 }
 
+
 .total-card {
     border-left: 4px solid #60a5fa;
 }
+
 
 .total-card .stat-value {
     color: #60a5fa;
@@ -257,6 +232,7 @@ body {
     border-left: 4px solid #f59e0b;
 }
 
+
 .received-card .stat-value {
     color: #fbbf24;
 }
@@ -266,18 +242,17 @@ body {
     border-left: 4px solid #22c55e;
 }
 
+
 .delivered-card .stat-value {
     color: #4ade80;
 }
 
 
-
-/* ============================= */
-/* ORDERS */
-/* ============================= */
+/* ================================
+   ORDERS
+================================ */
 
 .orders-section {
-
     padding: 30px;
 
     background:
@@ -304,7 +279,6 @@ body {
 
 
 .section-header {
-
     display: flex;
 
     align-items: center;
@@ -318,7 +292,6 @@ body {
 
 
 .section-header h2 {
-
     font-size: 21px;
 
     margin-bottom: 6px;
@@ -326,20 +299,17 @@ body {
 
 
 .section-header p {
-
     color: #94a3b8;
 
     font-size: 14px;
 }
 
 
-
-/* ============================= */
-/* BUTTONS */
-/* ============================= */
+/* ================================
+   BUTTONS
+================================ */
 
 .primary-button {
-
     border: none;
 
     padding: 11px 18px;
@@ -356,12 +326,13 @@ body {
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
 
 .primary-button:hover {
-
     background: #1d4ed8;
 
     transform: translateY(-1px);
@@ -369,7 +340,6 @@ body {
 
 
 .primary-button:disabled {
-
     background: #64748b;
 
     cursor: not-allowed;
@@ -379,7 +349,6 @@ body {
 
 
 .secondary-button {
-
     border:
         1px solid
         rgba(
@@ -404,11 +373,14 @@ body {
     color: white;
 
     cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
 
 .secondary-button:hover {
-
     background:
         rgba(
             255,
@@ -416,11 +388,21 @@ body {
             255,
             0.15
         );
+
+    transform: translateY(-1px);
+}
+
+
+.secondary-button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
 }
 
 
 .cancel-button {
-
     border: none;
 
     padding: 11px 18px;
@@ -432,22 +414,21 @@ body {
     color: white;
 
     cursor: pointer;
+
+    transition: 0.2s;
 }
 
 
 .cancel-button:hover {
-
     background: #334155;
 }
 
 
-
-/* ============================= */
-/* TABLE */
-/* ============================= */
+/* ================================
+   TABLE
+================================ */
 
 .table-container {
-
     width: 100%;
 
     overflow-x: auto;
@@ -455,7 +436,6 @@ body {
 
 
 table {
-
     width: 100%;
 
     border-collapse: collapse;
@@ -466,7 +446,6 @@ table {
 
 th,
 td {
-
     padding: 14px 12px;
 
     text-align: left;
@@ -485,7 +464,6 @@ td {
 
 
 th {
-
     color: #94a3b8;
 
     font-weight: 600;
@@ -493,19 +471,20 @@ th {
 
 
 td {
-
     color: #e2e8f0;
 }
 
 
 tr:last-child td {
-
     border-bottom: none;
 }
 
 
-.status {
+/* ================================
+   STATUS
+================================ */
 
+.status {
     display: inline-block;
 
     padding: 5px 9px;
@@ -519,7 +498,6 @@ tr:last-child td {
 
 
 .status-received {
-
     background:
         rgba(
             59,
@@ -533,7 +511,6 @@ tr:last-child td {
 
 
 .status-delivered {
-
     background:
         rgba(
             34,
@@ -547,7 +524,6 @@ tr:last-child td {
 
 
 .dashboard-message {
-
     margin-top: 15px;
 
     color: #93c5fd;
@@ -556,13 +532,11 @@ tr:last-child td {
 }
 
 
-
-/* ============================= */
-/* MODAL */
-/* ============================= */
+/* ================================
+   MODAL
+================================ */
 
 .modal-overlay {
-
     position: fixed;
 
     inset: 0;
@@ -570,7 +544,6 @@ tr:last-child td {
     display: none;
 
     align-items: center;
-
     justify-content: center;
 
     padding: 20px;
@@ -588,17 +561,12 @@ tr:last-child td {
 
 
 .modal-overlay.active {
-
     display: flex;
 }
 
 
 .order-modal {
-
-    width: min(
-        650px,
-        100%
-    );
+    width: min(650px, 100%);
 
     max-height: 90vh;
 
@@ -606,8 +574,7 @@ tr:last-child td {
 
     padding: 30px;
 
-    background:
-        #172554;
+    background: #172554;
 
     border:
         1px solid
@@ -632,7 +599,6 @@ tr:last-child td {
 
 
 .modal-header {
-
     display: flex;
 
     justify-content: space-between;
@@ -644,13 +610,11 @@ tr:last-child td {
 
 
 .modal-header h2 {
-
     margin-bottom: 6px;
 }
 
 
 .modal-header p {
-
     color: #94a3b8;
 
     font-size: 14px;
@@ -658,10 +622,10 @@ tr:last-child td {
 
 
 .close-button {
-
     width: 35px;
-
     height: 35px;
+
+    flex-shrink: 0;
 
     border: none;
 
@@ -680,11 +644,12 @@ tr:last-child td {
     font-size: 22px;
 
     cursor: pointer;
+
+    transition: background 0.2s ease;
 }
 
 
 .close-button:hover {
-
     background:
         rgba(
             255,
@@ -695,13 +660,11 @@ tr:last-child td {
 }
 
 
-
-/* ============================= */
-/* FORM */
-/* ============================= */
+/* ================================
+   FORM
+================================ */
 
 .form-grid {
-
     display: grid;
 
     grid-template-columns:
@@ -712,7 +675,6 @@ tr:last-child td {
 
 
 .form-group {
-
     display: flex;
 
     flex-direction: column;
@@ -722,13 +684,11 @@ tr:last-child td {
 
 
 .full-width {
-
     grid-column: 1 / -1;
 }
 
 
 .form-group label {
-
     color: #cbd5e1;
 
     font-size: 14px;
@@ -738,7 +698,6 @@ tr:last-child td {
 .form-group input,
 .garment-row select,
 .garment-row input {
-
     width: 100%;
 
     padding: 12px;
@@ -765,13 +724,23 @@ tr:last-child td {
     color: white;
 
     outline: none;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.form-group input::placeholder {
+    color: #64748b;
 }
 
 
 .form-group input:focus,
 .garment-row select:focus,
 .garment-row input:focus {
-
     border-color: #60a5fa;
 
     box-shadow:
@@ -785,37 +754,46 @@ tr:last-child td {
 }
 
 
+.garment-row select {
+    cursor: pointer;
+}
 
-/* ============================= */
-/* GARMENTS */
-/* ============================= */
+
+.garment-row select option {
+    background: #172554;
+
+    color: white;
+}
+
+
+/* ================================
+   GARMENTS
+================================ */
 
 .garments-section {
-
     margin-top: 25px;
 }
 
 
 .garments-header {
-
     display: flex;
 
     align-items: center;
 
     justify-content: space-between;
 
+    gap: 15px;
+
     margin-bottom: 15px;
 }
 
 
 .garments-header h3 {
-
     font-size: 17px;
 }
 
 
 .garments-container {
-
     display: flex;
 
     flex-direction: column;
@@ -825,7 +803,6 @@ tr:last-child td {
 
 
 .garment-row {
-
     display: grid;
 
     grid-template-columns:
@@ -838,9 +815,7 @@ tr:last-child td {
 
 
 .remove-garment-button {
-
     width: 40px;
-
     height: 40px;
 
     border: none;
@@ -854,22 +829,21 @@ tr:last-child td {
     font-size: 18px;
 
     cursor: pointer;
+
+    transition: background 0.2s ease;
 }
 
 
 .remove-garment-button:hover {
-
     background: #b91c1c;
 }
 
 
-
-/* ============================= */
-/* MODAL ACTIONS */
-/* ============================= */
+/* ================================
+   MODAL ACTIONS
+================================ */
 
 .order-message {
-
     margin-top: 15px;
 
     font-size: 14px;
@@ -879,7 +853,6 @@ tr:last-child td {
 
 
 .modal-actions {
-
     display: flex;
 
     justify-content: flex-end;
@@ -890,22 +863,24 @@ tr:last-child td {
 }
 
 
-/* ============================= */
-/* VIEW ORDER MODAL */
-/* ============================= */
+/* ================================
+   VIEW ORDER MODAL
+================================ */
 
 .view-order-modal {
     width: min(700px, 100%);
 }
 
 
-/* Order information */
+/* ================================
+   ORDER INFORMATION
+================================ */
 
 .order-details {
-
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
 
     gap: 12px;
 
@@ -914,7 +889,6 @@ tr:last-child td {
 
 
 .detail-item {
-
     display: flex;
 
     flex-direction: column;
@@ -923,16 +897,28 @@ tr:last-child td {
 
     padding: 14px 16px;
 
-    background: rgba(15, 23, 42, 0.45);
+    background:
+        rgba(
+            15,
+            23,
+            42,
+            0.45
+        );
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
 
     border-radius: 10px;
 }
 
 
 .detail-label {
-
     font-size: 12px;
 
     color: #94a3b8;
@@ -944,7 +930,6 @@ tr:last-child td {
 
 
 .detail-item strong {
-
     font-size: 15px;
 
     color: #f8fafc;
@@ -955,10 +940,11 @@ tr:last-child td {
 }
 
 
-/* Status */
+/* ================================
+   ORDER STATUS DISPLAY
+================================ */
 
 .order-status-display {
-
     display: inline-flex;
 
     width: fit-content;
@@ -967,7 +953,13 @@ tr:last-child td {
 
     border-radius: 20px;
 
-    background: rgba(59, 130, 246, 0.15);
+    background:
+        rgba(
+            59,
+            130,
+            246,
+            0.15
+        );
 
     color: #93c5fd;
 
@@ -977,32 +969,42 @@ tr:last-child td {
 }
 
 
-/* ============================= */
-/* STATUS UPDATE */
-/* ============================= */
+/* ================================
+   STATUS UPDATE
+================================ */
 
 .status-update-section {
-
     padding: 18px;
 
     margin-bottom: 22px;
 
-    background: rgba(255, 255, 255, 0.05);
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.05
+        );
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
 
     border-radius: 12px;
 }
 
 
 .status-update-header {
-
     margin-bottom: 14px;
 }
 
 
 .status-update-header h3 {
-
     font-size: 16px;
 
     margin-bottom: 4px;
@@ -1010,7 +1012,6 @@ tr:last-child td {
 
 
 .status-update-header p {
-
     color: #94a3b8;
 
     font-size: 13px;
@@ -1018,7 +1019,6 @@ tr:last-child td {
 
 
 .status-update-controls {
-
     display: flex;
 
     gap: 10px;
@@ -1026,14 +1026,20 @@ tr:last-child td {
 
 
 .status-update-controls select {
-
     flex: 1;
 
     min-width: 0;
 
     padding: 11px 12px;
 
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.15
+        );
 
     border-radius: 8px;
 
@@ -1044,11 +1050,19 @@ tr:last-child td {
     font-size: 14px;
 
     outline: none;
+
+    cursor: pointer;
+}
+
+
+.status-update-controls select option {
+    background: #172554;
+
+    color: white;
 }
 
 
 .update-status-button {
-
     border: none;
 
     padding: 11px 18px;
@@ -1065,12 +1079,13 @@ tr:last-child td {
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
 
 .update-status-button:hover {
-
     background: #1d4ed8;
 
     transform: translateY(-1px);
@@ -1078,7 +1093,6 @@ tr:last-child td {
 
 
 .update-status-button:disabled {
-
     background: #64748b;
 
     cursor: not-allowed;
@@ -1087,24 +1101,21 @@ tr:last-child td {
 }
 
 
-/* ============================= */
-/* GARMENTS */
-/* ============================= */
+/* ================================
+   ORDER GARMENTS
+================================ */
 
 .order-garments {
-
     margin-bottom: 22px;
 }
 
 
 .garments-title {
-
     margin-bottom: 12px;
 }
 
 
 .garments-title h3 {
-
     font-size: 16px;
 
     margin-bottom: 4px;
@@ -1112,7 +1123,6 @@ tr:last-child td {
 
 
 .garments-title p {
-
     color: #94a3b8;
 
     font-size: 13px;
@@ -1120,7 +1130,6 @@ tr:last-child td {
 
 
 .garment-details-list {
-
     display: flex;
 
     flex-direction: column;
@@ -1130,18 +1139,32 @@ tr:last-child td {
 
 
 .garment-detail-row {
-
     display: flex;
 
     align-items: center;
 
     justify-content: space-between;
 
+    gap: 15px;
+
     padding: 12px 15px;
 
-    background: rgba(15, 23, 42, 0.45);
+    background:
+        rgba(
+            15,
+            23,
+            42,
+            0.45
+        );
 
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.07
+        );
 
     border-radius: 8px;
 
@@ -1150,7 +1173,6 @@ tr:last-child td {
 
 
 .garment-detail-row span:first-child {
-
     font-weight: 600;
 
     color: #f8fafc;
@@ -1158,17 +1180,15 @@ tr:last-child td {
 
 
 .garment-detail-row span:last-child {
-
     color: #94a3b8;
 }
 
 
-/* ============================= */
-/* ACTION BUTTONS */
-/* ============================= */
+/* ================================
+   VIEW ORDER ACTIONS
+================================ */
 
-.modal-actions {
-
+.view-order-modal .modal-actions {
     display: grid;
 
     grid-template-columns:
@@ -1180,16 +1200,16 @@ tr:last-child td {
 }
 
 
-.modal-actions button {
-
+.view-order-modal .modal-actions button {
     width: 100%;
 }
 
 
-/* WhatsApp */
+/* ================================
+   WHATSAPP
+================================ */
 
 .whatsapp-button {
-
     border: none;
 
     padding: 11px 18px;
@@ -1206,67 +1226,24 @@ tr:last-child td {
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
 
 .whatsapp-button:hover {
-
     background: #16a34a;
 
     transform: translateY(-1px);
 }
 
 
-/* ============================= */
-/* MOBILE */
-/* ============================= */
-
-@media (max-width: 700px) {
-
-    .order-details {
-
-        grid-template-columns: 1fr;
-
-    }
-
-
-    .status-update-controls {
-
-        flex-direction: column;
-    }
-
-
-    .update-status-button {
-
-        width: 100%;
-    }
-
-
-    .modal-actions {
-
-        grid-template-columns: 1fr;
-
-    }
-
-
-    .garment-detail-row {
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 5px;
-    }
-
-}
-
-/* ============================= */
-/* VIEW ORDER BUTTON */
-/* ============================= */
+/* ================================
+   VIEW ORDER BUTTON
+================================ */
 
 .view-order-button {
-
     border: none;
 
     padding: 7px 14px;
@@ -1283,35 +1260,41 @@ tr:last-child td {
 
     cursor: pointer;
 
-    transition: all 0.2s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 
 .view-order-button:hover {
-
     background: #2563eb;
 
     transform: translateY(-1px);
 
     box-shadow:
         0 4px 12px
-        rgba(37, 99, 235, 0.25);
+        rgba(
+            37,
+            99,
+            235,
+            0.25
+        );
 }
 
 
 .view-order-button:active {
-
     transform: translateY(0);
 
     box-shadow: none;
 }
 
-/* ============================= */
-/* ORDER SEARCH */
-/* ============================= */
+
+/* ================================
+   ORDER SEARCH
+================================ */
 
 .order-search {
-
     display: flex;
 
     gap: 10px;
@@ -1321,28 +1304,30 @@ tr:last-child td {
 
 
 .order-search input {
-
     flex: 1;
 
     min-width: 0;
 
     padding: 11px 14px;
 
-    border: 1px solid rgba(
-        255,
-        255,
-        255,
-        0.15
-    );
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.15
+        );
 
     border-radius: 8px;
 
-    background: rgba(
-        15,
-        23,
-        42,
-        0.6
-    );
+    background:
+        rgba(
+            15,
+            23,
+            42,
+            0.6
+        );
 
     color: white;
 
@@ -1353,13 +1338,11 @@ tr:last-child td {
 
 
 .order-search input::placeholder {
-
     color: #64748b;
 }
 
 
 .order-search input:focus {
-
     border-color: #60a5fa;
 
     box-shadow:
@@ -1374,7 +1357,6 @@ tr:last-child td {
 
 
 .search-button {
-
     border: none;
 
     padding: 11px 18px;
@@ -1388,64 +1370,71 @@ tr:last-child td {
     font-weight: 600;
 
     cursor: pointer;
+
+    transition: background 0.2s ease;
 }
 
 
 .search-button:hover {
-
     background: #1d4ed8;
 }
 
 
 .clear-search-button {
-
-    border: 1px solid rgba(
-        255,
-        255,
-        255,
-        0.15
-    );
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.15
+        );
 
     padding: 11px 18px;
 
     border-radius: 8px;
 
-    background: rgba(
-        255,
-        255,
-        255,
-        0.06
-    );
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.06
+        );
 
     color: white;
 
     cursor: pointer;
+
+    transition:
+        background 0.2s ease;
 }
 
 
 .clear-search-button:hover {
-
-    background: rgba(
-        255,
-        255,
-        255,
-        0.12
-    );
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
 }
 
-/* ============================= */
-/* DELETE ORDER */
-/* ============================= */
+
+/* ================================
+   DELETE ORDER
+================================ */
 
 .delete-order-button {
-
     width: 100%;
 
     margin-top: 12px;
 
     padding: 11px 18px;
 
-    border: 1px solid
+    border:
+        1px solid
         rgba(
             239,
             68,
@@ -1471,12 +1460,13 @@ tr:last-child td {
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
 
 .delete-order-button:hover {
-
     background:
         rgba(
             239,
@@ -1489,14 +1479,24 @@ tr:last-child td {
 }
 
 
-/* ============================= */
-/* MOBILE */
-/* ============================= */
+.delete-order-button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
 
 @media (max-width: 700px) {
 
-    .navbar {
+    /* ============================
+       NAVBAR
+    ============================ */
 
+    .navbar {
         padding: 18px 20px;
 
         flex-direction: column;
@@ -1508,13 +1508,11 @@ tr:last-child td {
 
 
     .logo {
-
         text-align: center;
     }
 
 
     .navbar nav {
-
         display: flex;
 
         justify-content: center;
@@ -1528,7 +1526,6 @@ tr:last-child td {
 
 
     .navbar a {
-
         display: block;
 
         padding: 8px 10px;
@@ -1538,152 +1535,367 @@ tr:last-child td {
 
 
     .navbar button {
-
         padding: 8px 12px;
     }
 
 
+    /* ============================
+       MAIN
+    ============================ */
+
     .dashboard-container {
+        width: 94%;
 
         margin-top: 30px;
     }
 
 
-    .stats-grid {
+    .welcome-section h1 {
+        font-size: 27px;
+    }
 
+
+    /* ============================
+       STATS
+    ============================ */
+
+    .stats-grid {
         grid-template-columns: 1fr;
     }
 
 
-    .orders-section {
+    .stat-card {
+        padding: 20px;
+    }
 
+
+    /* ============================
+       ORDERS
+    ============================ */
+
+    .orders-section {
         padding: 20px;
     }
 
 
     .section-header {
-
         align-items: flex-start;
 
         flex-direction: column;
     }
 
 
-    .primary-button {
+    .section-header .primary-button {
+        width: 100%;
+    }
+
+
+    /* ============================
+       SEARCH
+    ============================ */
+
+    .order-search {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    .order-search input {
+        grid-column: 1 / -1;
 
         width: 100%;
     }
 
 
-    .form-grid {
+    .search-button,
+    .clear-search-button {
+        width: 100%;
+    }
 
+
+    /* ============================
+       MOBILE TABLE
+    ============================ */
+
+    .table-container {
+        overflow-x: visible;
+    }
+
+
+    table {
+        width: 100%;
+
+        min-width: 0;
+
+        table-layout: fixed;
+    }
+
+
+    th,
+    td {
+        padding: 11px 6px;
+
+        font-size: 12px;
+    }
+
+
+    /* Hide Phone */
+
+    table th:nth-child(3),
+    table td:nth-child(3) {
+        display: none;
+    }
+
+
+    /* Hide Amount */
+
+    table th:nth-child(5),
+    table td:nth-child(5) {
+        display: none;
+    }
+
+
+    /* Order ID */
+
+    table th:nth-child(1),
+    table td:nth-child(1) {
+        width: 15%;
+    }
+
+
+    /* Customer */
+
+    table th:nth-child(2),
+    table td:nth-child(2) {
+        width: 29%;
+    }
+
+
+    /* Status */
+
+    table th:nth-child(4),
+    table td:nth-child(4) {
+        width: 20%;
+    }
+
+
+    /* Date */
+
+    table th:nth-child(6),
+    table td:nth-child(6) {
+        width: 20%;
+    }
+
+
+    /* Action */
+
+    table th:nth-child(7),
+    table td:nth-child(7) {
+        width: 16%;
+    }
+
+
+    table td:nth-child(2) {
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+    }
+
+
+    .view-order-button {
+        padding: 7px 9px;
+
+        font-size: 11px;
+    }
+
+
+    /* ============================
+       FORM
+    ============================ */
+
+    .form-grid {
         grid-template-columns: 1fr;
     }
 
 
     .full-width {
-
         grid-column: auto;
     }
 
 
     .garment-row {
-
         grid-template-columns:
             1fr 90px 40px;
     }
 
 
-    .modal-actions {
+    /* ============================
+       MODAL
+    ============================ */
 
+    .modal-overlay {
+        padding: 12px;
+    }
+
+
+    .order-modal {
+        padding: 22px;
+
+        max-height: 92vh;
+
+        border-radius: 14px;
+    }
+
+
+    .modal-header {
+        gap: 12px;
+    }
+
+
+    .modal-header h2 {
+        font-size: 20px;
+    }
+
+
+    /* ============================
+       ORDER DETAILS
+    ============================ */
+
+    .order-details {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* ============================
+       STATUS UPDATE
+    ============================ */
+
+    .status-update-controls {
         flex-direction: column;
     }
 
 
-    .modal-actions button {
-
+    .update-status-button {
         width: 100%;
     }
 
-    @media (max-width: 700px) {
+
+    /* ============================
+       GARMENT DETAILS
+    ============================ */
+
+    .garment-detail-row {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 5px;
+    }
+
+
+    /* ============================
+       VIEW ORDER ACTIONS
+    ============================ */
+
+    .view-order-modal .modal-actions {
+        grid-template-columns: 1fr;
+    }
+
+
+    .view-order-modal .modal-actions button {
+        width: 100%;
+    }
+
+
+    /* ============================
+       NEW ORDER ACTIONS
+    ============================ */
+
+    #orderModal .modal-actions {
+        flex-direction: column;
+    }
+
+
+    #orderModal .modal-actions button {
+        width: 100%;
+    }
+
+}
+
+
+/* ================================
+   SMALL MOBILE
+================================ */
+
+@media (max-width: 420px) {
+
+    .navbar{
+        position: sticky;
+    }
+
+    .navbar nav {
+        gap: 5px;
+    }
+
+
+    .navbar a {
+        padding: 7px 6px;
+
+        font-size: 13px;
+    }
+
+
+    .navbar button {
+        padding: 7px 9px;
+
+        font-size: 13px;
+    }
+
+
+    .dashboard-container {
+        width: 95%;
+    }
+
+
+    .orders-section {
+        padding: 15px;
+    }
+
+
+    .order-modal {
+        padding: 18px;
+    }
+
+
+    .garment-row {
+        grid-template-columns:
+            1fr 75px 36px;
+
+        gap: 7px;
+    }
+
+
+    .remove-garment-button {
+        width: 36px;
+        height: 36px;
+    }
+
+
+    th,
+    td {
+        padding: 9px 4px;
+
+        font-size: 11px;
+    }
+
 
     .view-order-button {
+        padding: 6px 7px;
 
-        padding: 7px 11px;
-
-        font-size: 12px;
-
+        font-size: 10px;
     }
-
-    }
-
-    /* ============================= */
-    /* MOBILE ORDER TABLE */
-    /* ============================= */
-
-    @media (max-width: 700px) {
-
-        .table-container {
-            overflow-x: visible;
-        }
-
-        table {
-            width: 100%;
-            min-width: 0;
-            table-layout: fixed;
-        }
-
-        /* Hide Phone and Amount */
-
-        table th:nth-child(3),
-        table td:nth-child(3),
-
-        table th:nth-child(5),
-        table td:nth-child(5) {
-            display: none;
-        }
-
-        th,
-        td {
-            padding: 11px 6px;
-            font-size: 12px;
-        }
-
-        /* Column widths */
-
-        table th:nth-child(1),
-        table td:nth-child(1) {
-            width: 15%;
-        }
-
-        table th:nth-child(2),
-        table td:nth-child(2) {
-            width: 27%;
-        }
-
-        table th:nth-child(4),
-        table td:nth-child(4) {
-            width: 20%;
-        }
-
-        table th:nth-child(6),
-        table td:nth-child(6) {
-            width: 22%;
-        }
-
-        table th:nth-child(7),
-        table td:nth-child(7) {
-            width: 16%;
-        }
-
-        /* Don't let long customer names destroy layout */
-
-        table td:nth-child(2) {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        }
 
 }

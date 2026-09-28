@@ -7,7 +7,7 @@
 
     <title>Profile - Laundry Management System</title>
 
-    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="/css/profile.css">
 </head>
 
 <body>
@@ -34,7 +34,10 @@
                 Profile
             </a>
 
-            <button id="logoutButton">
+            <button
+                type="button"
+                id="logoutButton"
+            >
                 Logout
             </button>
 
@@ -273,7 +276,7 @@
             </section>
 
 
-            <!-- Save -->
+            <!-- Save Changes -->
 
             <div class="form-actions">
 
@@ -283,6 +286,15 @@
                     class="save-button"
                 >
                     Save Changes
+                </button>
+
+                <button
+                        type="button"
+                        id="changePasswordPageButton"
+                        class="save-button"
+                        onclick="window.location.href='change-password.html'"
+                    >
+                        Change Password
                 </button>
 
                 <p
@@ -297,8 +309,10 @@
     </main>
 
 
-    <script src="../js/api.js"></script>
-    <script src="../js/profile.js"></script>
+    <!-- JavaScript -->
+
+    <script src="/js/api.js"></script>
+    <script src="/js/profile.js"></script>
 
 </body>
 
