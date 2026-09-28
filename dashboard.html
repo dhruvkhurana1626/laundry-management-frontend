@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dashboard - Laundry Management System</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/dashboard.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ============================= -->
+    <!-- NAVBAR -->
+    <!-- ============================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            Laundry Management
+        </div>
+
+
+        <nav>
+
+            <a
+                href="dashboard.html"
+                class="active"
+            >
+                Dashboard
+            </a>
+
+            <a href="pricing.html">
+                Pricing
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <button id="logoutButton">
+                Logout
+            </button>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- ============================= -->
+    <!-- MAIN -->
+    <!-- ============================= -->
+
+    <main class="dashboard-container">
+
+
+        <!-- Welcome -->
+
+        <section class="welcome-section">
+
+            <h1>
+                Welcome back
+            </h1>
+
+            <p>
+                Manage your laundry orders and business.
+            </p>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- STATISTICS -->
+        <!-- ============================= -->
+
+
+        <section class="stats-grid">
+
+            <div class="stat-card total-card">
+
+                <span class="stat-title">
+                    Total Orders
+                </span>
+
+                <span
+                    id="totalOrders"
+                    class="stat-value"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="stat-card received-card">
+
+                <span class="stat-title">
+                    Received
+                </span>
+
+                <span
+                    id="receivedOrders"
+                    class="stat-value"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="stat-card delivered-card">
+
+                <span class="stat-title">
+                    Delivered
+                </span>
+
+                <span
+                    id="deliveredOrders"
+                    class="stat-value"
+                >
+                    0
+                </span>
+
+            </div>
+
+        </section>      
+
+
+        <!-- ============================= -->
+        <!-- RECENT ORDERS -->
+        <!-- ============================= -->
+
+        <section class="orders-section">
+
+            <!-- ============================= -->
+            <!-- ORDER SEARCH -->
+            <!-- ============================= -->
+
+            <div class="order-search">
+
+                <input
+                    type="text"
+                    id="orderSearchInput"
+                    placeholder="Search by customer, phone or email..."
+                >
+
+                <button
+                    type="button"
+                    id="searchOrderButton"
+                    class="search-button"
+                >
+                    Search
+                </button>
+
+                <button
+                    type="button"
+                    id="clearSearchButton"
+                    class="clear-search-button"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Recent Orders
+                    </h2>
+
+                    <p>
+                        View your latest orders.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="addOrderButton"
+                    class="primary-button"
+                >
+                    + New Order
+                </button>
+
+            </div>
+
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Order ID
+                            </th>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="ordersTableBody">
+
+                        <!-- Orders inserted by JS -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <p
+                id="dashboardMessage"
+                class="dashboard-message"
+            ></p>
+
+
+        </section>
+
+
+    </main>
+
+    
+
+
+
+    <!-- ============================= -->
+    <!-- NEW ORDER MODAL -->
+    <!-- ============================= -->
+
+    <div
+        id="orderModal"
+        class="modal-overlay"
+    >
+
+
+        <div class="order-modal">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>
+                        Create New Order
+                    </h2>
+
+                    <p>
+                        Enter customer and garment details.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="closeOrderModal"
+                    class="close-button"
+                    type="button"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <!-- Order Form -->
+
+            <form id="orderForm">
+
+
+                <!-- Customer -->
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="customerName">
+                            Customer Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customerName"
+                            placeholder="Enter customer name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="10 digit phone number"
+                            maxlength="10"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter customer email"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- Garments -->
+
+                <div class="garments-section">
+
+
+                    <div class="garments-header">
+
+                        <h3>
+                            Garments
+                        </h3>
+
+                        <button
+                            type="button"
+                            id="addGarmentButton"
+                            class="secondary-button"
+                        >
+                            + Add Garment
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="garmentsContainer"
+                        class="garments-container"
+                    >
+
+                        <!-- Garment rows added by JS -->
+
+                    </div>
+
+
+                </div>
+
+
+
+                <p
+                    id="orderMessage"
+                    class="order-message"
+                ></p>
+
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        id="cancelOrderButton"
+                        class="cancel-button"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="createOrderButton"
+                        class="primary-button"
+                    >
+                        Create Order
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+<!-- ============================= -->
+<!-- VIEW ORDER MODAL -->
+<!-- ============================= -->
+
+<div
+    id="viewOrderModal"
+    class="modal-overlay"
+>
+
+    <div class="order-modal view-order-modal">
+
+
+        <!-- Modal Header -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    Order Details
+                </h2>
+
+                <p>
+                    Complete order information.
+                </p>
+
+            </div>
+
+
+            <button
+                id="closeViewOrderModal"
+                class="close-button"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- ORDER INFORMATION -->
+        <!-- ============================= -->
+
+        <div class="order-details">
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Order ID
+                </span>
+
+                <strong id="viewOrderId">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Customer
+                </span>
+
+                <strong id="viewCustomerName">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Phone
+                </span>
+
+                <strong id="viewPhone">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Email
+                </span>
+
+                <strong id="viewEmail">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Status
+                </span>
+
+                <span
+                    id="viewStatus"
+                    class="order-status-display"
+                >
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Total Amount
+                </span>
+
+                <strong id="viewTotalAmount">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Created At
+                </span>
+
+                <strong id="viewCreatedAt">
+                    -
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- UPDATE STATUS -->
+        <!-- ============================= -->
+
+        <div class="status-update-section">
+
+            <div class="status-update-header">
+
+                <div>
+
+                    <h3>
+                        Order Status
+                    </h3>
+
+                    <p>
+                        Update the current order status.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="status-update-controls">
+
+                <select id="orderStatusSelect">
+
+                    <option value="RECEIVED">
+                        RECEIVED
+                    </option>
+
+                    <option value="DELIVERED">
+                        DELIVERED
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="button"
+                    id="updateStatusButton"
+                    class="update-status-button"
+                >
+                    Update Status
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- GARMENTS -->
+        <!-- ============================= -->
+
+        <div class="order-garments">
+
+            <div class="garments-title">
+
+                <div>
+
+                    <h3>
+                        Garments
+                    </h3>
+
+                    <p>
+                        Items included in this order.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="viewGarments"
+                class="garment-details-list"
+            >
+
+                <!-- Garments added by JavaScript -->
+
+            </div>
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- ACTIONS -->
+        <!-- ============================= -->
+
+        <div class="modal-actions">
+
+        <button
+            type="button"
+            id="editOrderButton"
+            class="secondary-button"
+        >
+            Edit Order
+        </button>
+
+        <button
+            type="button"
+            id="printOrderButton"
+            class="secondary-button"
+        >
+            Print
+        </button>
+
+        <button
+            type="button"
+            id="whatsappOrderButton"
+            class="whatsapp-button"
+        >
+            WhatsApp
+        </button>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="deleteOrderButton"
+            class="delete-order-button"
+        >
+            Delete Order
+        </button>
+
+    </div>
+
+</div>
+
+    
+
+
+
+    <script src="../js/api.js"></script>
+
+    <script src="../js/dashboard.js"></script>
+
+</body>
+
+</html>
