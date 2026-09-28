@@ -12,8 +12,6 @@ body {
     justify-content: center;
     align-items: center;
 
-    overflow: hidden;
-
     background:
         radial-gradient(
             circle at 20% 20%,
@@ -33,7 +31,13 @@ body {
         );
 
     position: relative;
+
+    overflow-x: hidden;
 }
+
+/* =========================
+   BACKGROUND ORBS
+========================= */
 
 body::before,
 body::after {
@@ -51,6 +55,8 @@ body::after {
     filter: blur(10px);
 
     animation: floatingOrb 10s ease-in-out infinite alternate;
+
+    pointer-events: none;
 }
 
 body::before {
@@ -80,19 +86,27 @@ body::after {
     }
 }
 
+/* =========================
+   REGISTER CONTAINER
+========================= */
+
 .register-container {
     width: 100%;
-    padding: 20px;
+
+    padding: 30px 20px;
 
     position: relative;
+
     z-index: 2;
 }
 
 .register-card {
     width: 100%;
+
     max-width: 420px;
 
-    margin: auto;
+    margin: 0 auto;
+
     padding: 40px;
 
     background: rgba(255, 255, 255, 0.12);
@@ -102,6 +116,7 @@ body::after {
     border-radius: 20px;
 
     backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
     box-shadow:
         0 25px 60px rgba(0, 0, 0, 0.25),
@@ -123,6 +138,10 @@ body::after {
     }
 }
 
+/* =========================
+   HEADING
+========================= */
+
 .register-card h1 {
     text-align: center;
 
@@ -142,6 +161,10 @@ body::after {
 
     font-size: 15px;
 }
+
+/* =========================
+   FORM
+========================= */
 
 .form-group {
     margin-bottom: 18px;
@@ -199,6 +222,55 @@ body::after {
     transform: translateY(-1px);
 }
 
+/* =========================
+   PASSWORD FIELD
+========================= */
+
+.password-wrapper {
+    position: relative;
+
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+
+    padding-right: 45px;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    color: #bfdbfe;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    padding: 5px;
+
+    line-height: 1;
+
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: white;
+}
+
+/* =========================
+   REGISTER BUTTON
+========================= */
+
 .register-button {
     width: 100%;
 
@@ -224,7 +296,8 @@ body::after {
 
     transition:
         transform 0.25s ease,
-        box-shadow 0.25s ease;
+        box-shadow 0.25s ease,
+        opacity 0.25s ease;
 }
 
 .register-button:hover {
@@ -238,6 +311,20 @@ body::after {
     transform: translateY(0);
 }
 
+.register-button:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.65;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
 .message {
     margin-top: 12px;
 
@@ -246,12 +333,19 @@ body::after {
     color: #bfdbfe;
 
     font-size: 14px;
+
+    min-height: 18px;
 }
+
+/* =========================
+   AUTH LINKS
+========================= */
 
 .auth-links {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     gap: 6px;
@@ -277,6 +371,10 @@ body::after {
     text-decoration: underline;
 }
 
+/* =========================
+   FOOTER
+========================= */
+
 .footer {
     margin-top: 28px;
 
@@ -298,6 +396,8 @@ body::after {
 
     justify-content: center;
 
+    align-items: center;
+
     gap: 8px;
 }
 
@@ -305,6 +405,8 @@ body::after {
     color: #bfdbfe;
 
     text-decoration: none;
+
+    transition: color 0.2s ease;
 }
 
 .footer-links a:hover {
@@ -317,13 +419,47 @@ body::after {
     color: rgba(255, 255, 255, 0.35);
 }
 
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 480px) {
+
+    body {
+        align-items: flex-start;
+
+        min-height: 100vh;
+    }
+
+    .register-container {
+        padding: 20px 15px;
+    }
 
     .register-card {
         padding: 30px 24px;
+
+        border-radius: 16px;
     }
 
     .register-card h1 {
         font-size: 24px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+
+        margin-bottom: 24px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-group input {
+        font-size: 16px;
+    }
+
+    .footer {
+        margin-top: 24px;
     }
 }
