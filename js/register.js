@@ -51,11 +51,20 @@ registerForm.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = passwordInput.value;
+    const name =
+        document.getElementById("name").value.trim();
 
-    registerMessage.textContent = "Creating account...";
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        passwordInput.value;
+
+    registerMessage.textContent =
+        "Creating account...";
+
+    registerButton.disabled = true;
+    registerButton.textContent = "Creating...";
 
     try {
 
@@ -76,29 +85,60 @@ registerForm.addEventListener("submit", async function (event) {
             }
         );
 
-        const data = await response.text();
+        const responseText =
+            await response.text();
+
+        let data = {};
+
+        try {
+
+            data = responseText
+                ? JSON.parse(responseText)
+                : {};
+
+        } catch (error) {
+
+            console.error(
+                "Register response is not JSON:",
+                responseText
+            );
+        }
 
         if (response.ok) {
 
-            registerMessage.textContent = data ;
+            registerMessage.textContent =
+                data.message ||
+                responseText ||
+                "Account created successfully.";
 
             registerForm.reset();
 
-            setTimeout(() => {
+            setTimeout(function () {
                 window.location.href = "login.html";
             }, 1500);
 
-        } else {
-
-            registerMessage.textContent =
-                data.message || "Unable to create account.";
+            return;
         }
+
+        registerMessage.textContent =
+            data.message ||
+            data.error ||
+            responseText ||
+            "Unable to create account.";
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Register error:",
+            error
+        );
 
         registerMessage.textContent =
             "Unable to connect to the server.";
+
+    } finally {
+
+        registerButton.disabled = false;
+        registerButton.textContent = "Create Account";
     }
 });
