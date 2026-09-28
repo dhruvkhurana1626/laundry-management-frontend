@@ -1464,27 +1464,21 @@ if (updateStatusButton) {
                 return;
             }
 
-
             const newStatus =
                 orderStatusSelect.value;
-
 
             if (
                 newStatus ===
                 selectedOrder.orderStatus
             ) {
-
                 return;
             }
-
 
             updateStatusButton.disabled =
                 true;
 
-
             updateStatusButton.textContent =
                 "Updating...";
-
 
             try {
 
@@ -1496,57 +1490,67 @@ if (updateStatusButton) {
                         }
                     );
 
-
                 if (!response) {
                     return;
                 }
 
-
                 if (!response.ok) {
 
-                    const errorData =
+                    const responseText =
                         await response.text();
 
+                    let errorMessage =
+                        "Unable to update order status.";
+
+                    try {
+
+                        const errorData =
+                            responseText
+                                ? JSON.parse(responseText)
+                                : {};
+
+                        errorMessage =
+                            errorData.message ||
+                            errorMessage;
+
+                    } catch (error) {
+
+                        console.error(
+                            "Status update response is not JSON:",
+                            responseText
+                        );
+                    }
 
                     console.error(
                         "Status update failed:",
-                        errorData
+                        responseText
                     );
 
-
-                    alert(
-                        errorData ||
-                        "Unable to update order status."
-                    );
+                    alert(errorMessage);
 
                     return;
                 }
 
-
                 const updatedOrder =
                     await response.json();
-
 
                 console.log(
                     "Updated order:",
                     updatedOrder
                 );
 
-
                 selectedOrder =
                     updatedOrder;
-
 
                 viewStatus.textContent =
                     updatedOrder.orderStatus;
 
-
                 orderStatusSelect.value =
                     updatedOrder.orderStatus;
 
-
                 await loadRecentOrders();
 
+                closeViewModal();
 
             } catch (error) {
 
@@ -1555,11 +1559,9 @@ if (updateStatusButton) {
                     error
                 );
 
-
                 alert(
                     "Unable to connect to the server."
                 );
-
 
             } finally {
 
@@ -1568,7 +1570,6 @@ if (updateStatusButton) {
 
                 updateStatusButton.textContent =
                     "Update Status";
-
             }
 
         }
