@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://charm-pork-diff-artist.trycloudflare.com";
+const API_BASE_URL = "https://behalf-brush-wellness-nil.trycloudflare.com";
 
 async function apiRequest(url, options = {}) {
 
