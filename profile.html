@@ -83,12 +83,20 @@
 
                     <img
                         id="profileImage"
-                        src="/images/default-profile.png"
+                        src="/images/default-profile.svg"
                         alt="Profile Picture"
-                        class="profile-image"
-                    >
+                        class="profile-image">
 
                     <div class="profile-picture-actions">
+
+                        <button
+                            type="button"
+                            id="viewProfileImageButton"
+                            class="secondary-button"
+                            style="display: none;">
+                            View Photo
+                         </button>
+
 
                         <input
                             type="file"
@@ -97,12 +105,25 @@
                             hidden
                         >
 
+                        <label
+                            for="profileImageInput"
+                            id="changeProfileImageButton"
+                            class="secondary-button">
+                            Change Photo
+                        </label>
+
+                        <input
+                            type="file"
+                            id="profileImageInput"
+                            accept="image/jpeg,image/png"
+                            hidden>
+
                         <button
                             type="button"
-                            id="changeProfileImageButton"
-                            class="secondary-button"
-                        >
-                            Change Photo
+                            id="removeProfileImageButton"
+                            class="danger-button"
+                            style="display: none;">
+                            Remove Photo
                         </button>
 
                         <button
@@ -122,6 +143,8 @@
                         >
                             Cancel
                         </button>
+
+                        
 
                     </div>
 
@@ -373,6 +396,26 @@
         </form>
 
     </main>
+
+    <div id="profileImageModal" class="profile-image-modal">
+
+    <div class="profile-image-modal-content">
+
+            <button
+                type="button"
+                id="closeProfileImageModal"
+                class="profile-image-modal-close">
+                &times;
+            </button>
+
+            <img
+                id="fullProfileImage"
+                src=""
+                alt="Profile Picture">
+
+        </div>
+
+    </div>
 
 
     <!-- JavaScript -->

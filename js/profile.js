@@ -60,6 +60,21 @@ const saveProfileImageButton =
 const cancelProfileImageButton =
     document.getElementById("cancelProfileImageButton");
 
+const viewProfileImageButton =
+    document.getElementById("viewProfileImageButton");
+
+const profileImageModal =
+    document.getElementById("profileImageModal");
+
+const fullProfileImage =
+    document.getElementById("fullProfileImage");
+
+const closeProfileImageModal =
+    document.getElementById("closeProfileImageModal");
+
+const removeProfileImageButton =
+    document.getElementById("removeProfileImageButton");
+
 
 // =========================
 // Profile Image
@@ -67,13 +82,14 @@ const cancelProfileImageButton =
 
 let selectedProfileImage = null;
 let previousProfileImageUrl = "";
+let profileImagePreviewUrl = null;
+
+const DEFAULT_PROFILE_IMAGE = "/images/default-profile.svg";
 
 changeProfileImageButton.addEventListener(
     "click",
     function () {
-
         profileImageInput.click();
-
     }
 );
 
@@ -125,19 +141,17 @@ profileImageInput.addEventListener(
         selectedProfileImage = file;
 
 
-        // Keep current image
+        // Create a temporary preview URL
 
-        previousProfileImageUrl =
-            profileImage.src;
+        if (profileImagePreviewUrl) {
+            URL.revokeObjectURL(profileImagePreviewUrl);
+        }
 
-
-        // Preview selected image
-
-        const previewUrl =
+        profileImagePreviewUrl =
             URL.createObjectURL(file);
 
         profileImage.src =
-            previewUrl;
+            profileImagePreviewUrl;
 
 
         // Show buttons
@@ -151,6 +165,86 @@ profileImageInput.addEventListener(
 
         profileMessage.textContent =
             "Preview ready. Click Save Photo to upload.";
+
+    }
+);
+
+
+// =========================
+// Cancel Profile Image
+// =========================
+
+cancelProfileImageButton.addEventListener(
+    "click",
+    function () {
+
+        // Restore the last saved image
+        profileImage.src =
+            previousProfileImageUrl || DEFAULT_PROFILE_IMAGE;
+
+        selectedProfileImage = null;
+        profileImageInput.value = "";
+
+        if (profileImagePreviewUrl) {
+            URL.revokeObjectURL(profileImagePreviewUrl);
+            profileImagePreviewUrl = null;
+        }
+
+        saveProfileImageButton.style.display =
+            "none";
+
+        cancelProfileImageButton.style.display =
+            "none";
+
+        profileMessage.textContent =
+            "Profile photo changes cancelled.";
+    }
+);
+
+
+// =========================
+// View Profile Image
+// =========================
+
+viewProfileImageButton.addEventListener(
+    "click",
+    function () {
+
+        if (!profileImage.src) {
+            return;
+        }
+
+        fullProfileImage.src =
+            profileImage.src;
+
+        profileImageModal.classList.add("show");
+    }
+);
+
+
+// Close modal
+
+closeProfileImageModal.addEventListener(
+    "click",
+    function () {
+
+        profileImageModal.classList.remove("show");
+
+    }
+);
+
+
+// Close when clicking outside image
+
+profileImageModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (event.target === profileImageModal) {
+
+            profileImageModal.classList.remove("show");
+
+        }
 
     }
 );
@@ -237,8 +331,21 @@ saveProfileImageButton.addEventListener(
                     profileImage.src =
                         data.profileImageUrl;
 
+                    previousProfileImageUrl =
+                        data.profileImageUrl;
+
+                    viewProfileImageButton.style.display =
+                        "inline-block";
+
+                    removeProfileImageButton.style.display =
+                        "inline-block";
                 }
 
+
+                if (profileImagePreviewUrl) {
+                    URL.revokeObjectURL(profileImagePreviewUrl);
+                    profileImagePreviewUrl = null;
+                }
 
                 selectedProfileImage = null;
 
@@ -292,11 +399,159 @@ saveProfileImageButton.addEventListener(
             saveProfileImageButton.textContent =
                 "Save Photo";
 
+            loadProfile();
+
         }
 
     }
 );
 
+
+//========================
+// Remove image
+//========================
+
+removeProfileImageButton.addEventListener(
+    "click",
+    async function () {
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to remove your profile photo?"
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        removeProfileImageButton.disabled =
+            true;
+
+        removeProfileImageButton.textContent =
+            "Removing...";
+
+        profileMessage.textContent =
+            "Removing profile photo...";
+
+
+        try {
+
+            const response =
+                await apiRequest(
+                    `${API_BASE_URL}/api/v1/profile/image`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            if (!response) {
+                return;
+            }
+
+
+            const responseText =
+                await response.text();
+
+            let data = {};
+
+
+            try {
+
+                data =
+                    responseText
+                        ? JSON.parse(responseText)
+                        : {};
+
+            } catch (error) {
+
+                console.error(
+                    "Response is not JSON:",
+                    responseText
+                );
+
+            }
+
+
+            if (response.ok) {
+
+                // Reset image
+
+                profileImage.src =
+                    DEFAULT_PROFILE_IMAGE;
+
+                previousProfileImageUrl =
+                    DEFAULT_PROFILE_IMAGE;
+
+
+                selectedProfileImage = null;
+                profileImageInput.value = "";
+
+
+                if (profileImagePreviewUrl) {
+                    URL.revokeObjectURL(profileImagePreviewUrl);
+                    profileImagePreviewUrl = null;
+                }
+
+
+                // Hide View Photo
+
+                viewProfileImageButton.style.display =
+                    "none";
+
+
+                // Hide Remove Photo completely
+
+                removeProfileImageButton.style.display =
+                    "none";
+
+
+                // Hide upload controls
+
+                saveProfileImageButton.style.display =
+                    "none";
+
+                cancelProfileImageButton.style.display =
+                    "none";
+
+
+                profileMessage.textContent =
+                    "Profile photo removed successfully.";
+
+            } else {
+
+                profileMessage.textContent =
+                    data.message ||
+                    data.error ||
+                    "Unable to remove profile photo.";
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Remove profile image error:",
+                error
+            );
+
+
+            profileMessage.textContent =
+                "Unable to connect to the server.";
+
+        } finally {
+
+            removeProfileImageButton.disabled =
+                false;
+
+            removeProfileImageButton.textContent =
+                "Remove Photo";
+
+        }
+
+    }
+);
 
 // =========================
 // Load Profile
@@ -313,9 +568,11 @@ async function loadProfile() {
             }
         );
 
+
         if (!response) {
             return;
         }
+
 
         if (!response.ok) {
 
@@ -325,12 +582,13 @@ async function loadProfile() {
             return;
         }
 
+
         const data =
             await response.json();
 
         console.log("Profile:", data);
 
-        //Profile Image
+
         if (data.profileImageUrl) {
 
             profileImage.src =
@@ -339,7 +597,27 @@ async function loadProfile() {
             previousProfileImageUrl =
                 data.profileImageUrl;
 
+            viewProfileImageButton.style.display =
+                "inline-block";
+
+            removeProfileImageButton.style.display =
+                "inline-block";
+
+        } else {
+
+            profileImage.src =
+                DEFAULT_PROFILE_IMAGE;
+
+            previousProfileImageUrl =
+                DEFAULT_PROFILE_IMAGE;
+
+            viewProfileImageButton.style.display =
+                "none";
+
+            removeProfileImageButton.style.display =
+                "none";
         }
+
 
         nameInput.value =
             data.name || "";
@@ -371,6 +649,7 @@ async function loadProfile() {
         gstNumberInput.value =
             data.gstNumber || "";
 
+
     } catch (error) {
 
         console.error(
@@ -378,9 +657,12 @@ async function loadProfile() {
             error
         );
 
+
         profileMessage.textContent =
             "Unable to connect to the server.";
+
     }
+
 }
 
 
@@ -394,6 +676,7 @@ profileForm.addEventListener(
 
         event.preventDefault();
 
+
         saveButton.disabled = true;
 
         saveButton.textContent =
@@ -405,6 +688,7 @@ profileForm.addEventListener(
 
         const profileData = {};
 
+
         const addIfNotEmpty = (key, input) => {
 
             const value =
@@ -413,6 +697,7 @@ profileForm.addEventListener(
             if (value !== "") {
                 profileData[key] = value;
             }
+
         };
 
 
@@ -486,6 +771,7 @@ profileForm.addEventListener(
 
             let data = {};
 
+
             try {
 
                 data =
@@ -499,6 +785,7 @@ profileForm.addEventListener(
                     "Response is not JSON:",
                     responseText
                 );
+
             }
 
 
@@ -520,11 +807,13 @@ profileForm.addEventListener(
                     responseText
                 );
 
+
                 profileMessage.textContent =
                     data.message ||
                     data.error ||
                     responseText ||
                     "Unable to update profile.";
+
             }
 
 
@@ -535,6 +824,7 @@ profileForm.addEventListener(
                 error
             );
 
+
             profileMessage.textContent =
                 "Unable to connect to the server.";
 
@@ -544,11 +834,11 @@ profileForm.addEventListener(
 
             saveButton.textContent =
                 "Save Changes";
+
         }
 
     }
 );
-
 
 // =========================
 // Logout
@@ -572,16 +862,3 @@ if (logoutButton) {
 // =========================
 
 loadProfile();
-
-// =========================
-// Change Profile Image
-// =========================
-
-changeProfileImageButton.addEventListener(
-    "click",
-    function () {
-
-        profileImageInput.click();
-
-    }
-);
