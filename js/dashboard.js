@@ -114,6 +114,9 @@ const orderStatusSelect =
 const updateStatusButton =
     document.getElementById("updateStatusButton");
 
+const deleteErrorMsg = 
+    document.getElementById("deleteErrorMessage");    
+
 let selectedOrder = null;
 
 let isEditMode = false;
@@ -1689,20 +1692,38 @@ if (deleteOrderButton) {
 
                 if (!response.ok) {
 
+                const errorText =
+                    await response.text();
+
+                let errorMessage =
+                    "Unable to delete order.";
+
+                try {
+
                     const errorData =
-                        await response.text();
+                        errorText
+                            ? JSON.parse(errorText)
+                            : {};
+
+                    errorMessage =
+                        errorData.message ||
+                        errorData.error ||
+                        errorMessage;
+
+                    } catch (error) {
+
+                        // Backend returned plain text
+                        errorMessage =
+                            errorText ||
+                            errorMessage;
+                    }
 
 
-                    console.error(
-                        "Delete order failed:",
-                        errorData
-                    );
+                    deleteErrorMsg.textContent =
+                        errorMessage;
 
-
-                    alert(
-                        errorData ||
-                        "Unable to delete order."
-                    );
+                    deleteErrorMsg.style.display =
+                        "block";
 
                     return;
                 }
@@ -1710,22 +1731,12 @@ if (deleteOrderButton) {
 
                 closeViewModal();
 
-
                 await loadRecentOrders();
 
 
             } catch (error) {
 
-                console.error(
-                    "Delete order error:",
-                    error
-                );
-
-
-                alert(
-                    "Unable to connect to the server."
-                );
-
+                deleteErrorMsg = error.errorText();
 
             } finally {
 
