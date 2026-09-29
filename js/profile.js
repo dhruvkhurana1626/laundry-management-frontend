@@ -114,20 +114,18 @@ profileImageInput.addEventListener(
         // =========================
 
         const maxSize =
-            2 * 1024 * 1024;
+            5 * 1024 * 1024;
 
         if (file.size > maxSize) {
 
             selectedProfileImage = null;
-
             profileImageInput.value = "";
 
             profilePhotoMessage.textContent =
-                "Image is too large. Please select an image under 2 MB.";
+                "Image is too large. Please select an image under 5 MB.";
 
-            alert(
-                "Image is too large.\n\nPlease select an image under 2 MB."
-            );
+            profileImageError.style.display =
+                "block";
 
             return;
         }
@@ -149,15 +147,17 @@ profileImageInput.addEventListener(
             profilePhotoMessage.textContent =
                 "Only JPG and PNG images are allowed.";
 
-            alert(
-                "Invalid image format.\n\nPlease select a JPG or PNG image."
-            );
-
             return;
         }
 
-        selectedProfileImage = file;
 
+        // Valid image selected
+        // Clear previous error
+
+        profileImageError.textContent = "";
+        profileImageError.style.display = "none";
+
+        selectedProfileImage = file;
 
         // Create a temporary preview URL
 
@@ -377,8 +377,8 @@ saveProfileImageButton.addEventListener(
                     "none";
 
 
-                profileMessage.textContent =
-                    "Profile photo updated successfully.";
+                // Clear preview message after successful upload
+                profilePhotoMessage.textContent = "";
 
             } else {
 

@@ -380,6 +380,15 @@ body {
     transform: scale(1.05);
 }
 
+.profile-image-error {
+    display: none;
+    margin-top: 14px;
+    text-align: center;
+    color: #ff8f8f;
+    font-size: 15px;
+    font-weight: 600;
+}
+
 /* ================================
    BUTTONS
 ================================ */

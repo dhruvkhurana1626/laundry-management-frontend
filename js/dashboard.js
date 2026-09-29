@@ -995,19 +995,40 @@ if (orderForm) {
 
                 if (!response.ok) {
 
-                    const errorData =
+                    const errorText =
                         await response.text();
 
-
                     console.error(
-                        "Create order failed:",
-                        errorData
+                        "Order update/create failed:",
+                        errorText
                     );
 
+                    let errorMessage =
+                        "Unable to update order.";
+
+                    try {
+
+                        const errorData =
+                            errorText
+                                ? JSON.parse(errorText)
+                                : {};
+
+                        errorMessage =
+                            errorData.message ||
+                            errorData.error ||
+                            errorMessage;
+
+                    } catch (error) {
+
+                        // Backend returned plain text
+                        if (errorText) {
+                            errorMessage =
+                                errorText;
+                        }
+                    }
 
                     orderMessage.textContent =
-                        errorData ||
-                        "Unable to create order.";
+                        errorMessage;
 
                     return;
                 }
