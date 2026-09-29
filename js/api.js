@@ -1,4 +1,6 @@
-const API_BASE_URL = "https://behalf-brush-wellness-nil.trycloudflare.com";
+const API_BASE_URL =
+    "https://behalf-brush-wellness-nil.trycloudflare.com";
+
 
 async function apiRequest(url, options = {}) {
 
@@ -9,18 +11,41 @@ async function apiRequest(url, options = {}) {
         sessionStorage.getItem("refreshToken");
 
 
-    // Add Authorization header
+    // =========================
+    // Headers
+    // =========================
+
     options.headers = {
         ...options.headers,
-        "Authorization": `Bearer ${accessToken}`,
-        "Content-Type": "application/json"
+        "Authorization": `Bearer ${accessToken}`
     };
 
 
-    let response = await fetch(url, options);
+    /*
+       JSON requests need:
+       Content-Type: application/json
+
+       FormData requests must NOT manually set
+       Content-Type because the browser adds:
+       multipart/form-data; boundary=...
+    */
+
+    if (!(options.body instanceof FormData)) {
+
+        options.headers["Content-Type"] =
+            "application/json";
+
+    }
 
 
-    // Access token expired
+    let response =
+        await fetch(url, options);
+
+
+    // =========================
+    // Access Token Expired
+    // =========================
+
     if (response.status === 401) {
 
         if (!refreshToken) {
@@ -32,20 +57,24 @@ async function apiRequest(url, options = {}) {
 
 
         // Ask backend for new access token
-        const refreshResponse = await fetch(
-            `${API_BASE_URL}/api/v1/auth/refresh`,
-            {
-                method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        const refreshResponse =
+            await fetch(
+                `${API_BASE_URL}/api/v1/auth/refresh`,
+                {
+                    method: "POST",
 
-                body: JSON.stringify({
-                    refreshToken: refreshToken
-                })
-            }
-        );
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        refreshToken:
+                            refreshToken
+                    })
+                }
+            );
 
 
         if (!refreshResponse.ok) {
@@ -61,6 +90,7 @@ async function apiRequest(url, options = {}) {
 
 
         // Store new access token
+
         sessionStorage.setItem(
             "accessToken",
             data.accessToken
@@ -68,12 +98,15 @@ async function apiRequest(url, options = {}) {
 
 
         // Update Authorization header
+
         options.headers.Authorization =
             `Bearer ${data.accessToken}`;
 
 
         // Retry original request
-        response = await fetch(url, options);
+
+        response =
+            await fetch(url, options);
     }
 
 
@@ -83,8 +116,14 @@ async function apiRequest(url, options = {}) {
 
 function logoutUser() {
 
-    sessionStorage.removeItem("accessToken");
-    sessionStorage.removeItem("refreshToken");
+    sessionStorage.removeItem(
+        "accessToken"
+    );
 
-    window.location.href = "login.html";
+    sessionStorage.removeItem(
+        "refreshToken"
+    );
+
+    window.location.href =
+        "login.html";
 }

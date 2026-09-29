@@ -64,6 +64,71 @@
 
         <form id="profileForm">
 
+            <!-- Profile Picture -->
+
+            <section class="profile-card profile-picture-card">
+
+                <div class="section-header">
+
+                    <h2>Profile Picture</h2>
+
+                    <p>
+                        Upload a profile picture for your account.
+                    </p>
+
+                </div>
+
+
+                <div class="profile-picture-container">
+
+                    <img
+                        id="profileImage"
+                        src="/images/default-profile.png"
+                        alt="Profile Picture"
+                        class="profile-image"
+                    >
+
+                    <div class="profile-picture-actions">
+
+                        <input
+                            type="file"
+                            id="profileImageInput"
+                            accept="image/jpeg,image/png"
+                            hidden
+                        >
+
+                        <button
+                            type="button"
+                            id="changeProfileImageButton"
+                            class="secondary-button"
+                        >
+                            Change Photo
+                        </button>
+
+                        <button
+                            type="button"
+                            id="saveProfileImageButton"
+                            class="save-button"
+                            style="display: none;"
+                        >
+                            Save Photo
+                        </button>
+
+                        <button
+                            type="button"
+                            id="cancelProfileImageButton"
+                            class="secondary-button"
+                            style="display: none;"
+                        >
+                            Cancel
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
             <!-- Personal Information -->
 
             <section class="profile-card">

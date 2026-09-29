@@ -41,6 +41,262 @@ const panNumberInput =
 const gstNumberInput =
     document.getElementById("gstNumber");
 
+// =========================
+// Profile Image Elements
+// =========================
+
+const profileImage =
+    document.getElementById("profileImage");
+
+const profileImageInput =
+    document.getElementById("profileImageInput");
+
+const changeProfileImageButton =
+    document.getElementById("changeProfileImageButton");
+
+const saveProfileImageButton =
+    document.getElementById("saveProfileImageButton");
+
+const cancelProfileImageButton =
+    document.getElementById("cancelProfileImageButton");
+
+
+// =========================
+// Profile Image
+// =========================
+
+let selectedProfileImage = null;
+let previousProfileImageUrl = "";
+
+changeProfileImageButton.addEventListener(
+    "click",
+    function () {
+
+        profileImageInput.click();
+
+    }
+);
+
+
+profileImageInput.addEventListener(
+    "change",
+    function () {
+
+        const file =
+            profileImageInput.files[0];
+
+        if (!file) {
+            return;
+        }
+
+
+        // Validate file type
+
+        if (
+            file.type !== "image/jpeg" &&
+            file.type !== "image/png"
+        ) {
+
+            profileMessage.textContent =
+                "Only JPG and PNG images are allowed.";
+
+            profileImageInput.value = "";
+
+            return;
+        }
+
+
+        // Validate file size: 2 MB
+
+        const maxSize =
+            2 * 1024 * 1024;
+
+        if (file.size > maxSize) {
+
+            profileMessage.textContent =
+                "Image size must be less than 2 MB.";
+
+            profileImageInput.value = "";
+
+            return;
+        }
+
+
+        selectedProfileImage = file;
+
+
+        // Keep current image
+
+        previousProfileImageUrl =
+            profileImage.src;
+
+
+        // Preview selected image
+
+        const previewUrl =
+            URL.createObjectURL(file);
+
+        profileImage.src =
+            previewUrl;
+
+
+        // Show buttons
+
+        saveProfileImageButton.style.display =
+            "inline-block";
+
+        cancelProfileImageButton.style.display =
+            "inline-block";
+
+
+        profileMessage.textContent =
+            "Preview ready. Click Save Photo to upload.";
+
+    }
+);
+
+// =========================
+// Save Profile Image
+// =========================
+
+saveProfileImageButton.addEventListener(
+    "click",
+    async function () {
+
+        if (!selectedProfileImage) {
+            return;
+        }
+
+
+        saveProfileImageButton.disabled =
+            true;
+
+        saveProfileImageButton.textContent =
+            "Uploading...";
+
+        profileMessage.textContent =
+            "Uploading profile photo...";
+
+
+        const formData =
+            new FormData();
+
+        formData.append(
+            "file",
+            selectedProfileImage
+        );
+
+
+        try {
+
+            const response =
+                await apiRequest(
+                    `${API_BASE_URL}/api/v1/profile/image`,
+                    {
+                        method: "PUT",
+                        body: formData
+                    }
+                );
+
+
+            if (!response) {
+                return;
+            }
+
+
+            const responseText =
+                await response.text();
+
+            let data = {};
+
+
+            try {
+
+                data =
+                    responseText
+                        ? JSON.parse(responseText)
+                        : {};
+
+            } catch (error) {
+
+                console.error(
+                    "Response is not JSON:",
+                    responseText
+                );
+
+            }
+
+
+            if (response.ok) {
+
+                // Use the actual S3 URL
+                // returned by the backend
+
+                if (data.profileImageUrl) {
+
+                    profileImage.src =
+                        data.profileImageUrl;
+
+                }
+
+
+                selectedProfileImage = null;
+
+                profileImageInput.value = "";
+
+
+                saveProfileImageButton.style.display =
+                    "none";
+
+                cancelProfileImageButton.style.display =
+                    "none";
+
+
+                profileMessage.textContent =
+                    "Profile photo updated successfully.";
+
+            } else {
+
+                console.error(
+                    "Profile image upload failed:",
+                    response.status,
+                    responseText
+                );
+
+
+                profileMessage.textContent =
+                    data.message ||
+                    data.error ||
+                    responseText ||
+                    "Unable to upload profile photo.";
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Profile image upload error:",
+                error
+            );
+
+
+            profileMessage.textContent =
+                "Unable to connect to the server.";
+
+        } finally {
+
+            saveProfileImageButton.disabled =
+                false;
+
+            saveProfileImageButton.textContent =
+                "Save Photo";
+
+        }
+
+    }
+);
+
 
 // =========================
 // Load Profile
@@ -73,6 +329,17 @@ async function loadProfile() {
             await response.json();
 
         console.log("Profile:", data);
+
+        //Profile Image
+        if (data.profileImageUrl) {
+
+            profileImage.src =
+                data.profileImageUrl;
+
+            previousProfileImageUrl =
+                data.profileImageUrl;
+
+        }
 
         nameInput.value =
             data.name || "";
@@ -305,3 +572,16 @@ if (logoutButton) {
 // =========================
 
 loadProfile();
+
+// =========================
+// Change Profile Image
+// =========================
+
+changeProfileImageButton.addEventListener(
+    "click",
+    function () {
+
+        profileImageInput.click();
+
+    }
+);

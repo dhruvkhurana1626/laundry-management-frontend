@@ -114,9 +114,9 @@ const orderStatusSelect =
 const updateStatusButton =
     document.getElementById("updateStatusButton");
 
-
 let selectedOrder = null;
 
+let isEditMode = false;
 
 // ================================
 // GARMENT TYPES
@@ -508,18 +508,17 @@ if (addOrderButton) {
         "click",
         function () {
 
+            isEditMode = false;
+
             orderForm.reset();
-
             garmentsContainer.innerHTML = "";
-
             orderMessage.textContent = "";
 
-            orderModal.classList.add(
-                "active"
-            );
+            createOrderButton.textContent = "Create Order";
+
+            orderModal.classList.add("active");
 
             addGarmentRow();
-
         }
     );
 
@@ -953,22 +952,28 @@ if (orderForm) {
             createOrderButton.disabled =
                 true;
 
-
             createOrderButton.textContent =
-                "Creating...";
-
+                isEditMode ? "Saving..." : "Creating...";
 
             orderMessage.textContent =
-                "Creating order...";
+                isEditMode ? "Saving changes..." : "Creating order...";
 
 
             try {
 
+                const url = isEditMode
+                    ? `${API_BASE_URL}/api/v1/order/${selectedOrder.id}`
+                    : `${API_BASE_URL}/api/v1/order`;
+
+                const method = isEditMode
+                    ? "PATCH"
+                    : "POST";
+
                 const response =
                     await apiRequest(
-                        `${API_BASE_URL}/api/v1/order`,
+                        url,
                         {
-                            method: "POST",
+                            method: method,
 
                             headers: {
                                 "Content-Type":
@@ -1031,7 +1036,9 @@ if (orderForm) {
 
 
                 orderMessage.textContent =
-                    "Order created successfully.";
+                    isEditMode
+                        ? "Order updated successfully."
+                        : "Order created successfully.";
 
 
                 await loadRecentOrders();
@@ -1421,29 +1428,60 @@ if (editOrderButton) {
                 return;
             }
 
+            // Save the order before closing view modal
+            const orderToEdit = selectedOrder;
+
+            // Enable edit mode
+            isEditMode = true;
 
             console.log(
-                "Edit order:",
-                selectedOrder
+                "Editing order:",
+                orderToEdit
             );
 
+            // Close view modal
+            closeViewModal();
 
-            /*
-             * Edit Order UI is ready.
-             *
-             * Actual saving requires:
-             *
-             * PATCH /api/v1/order/{id}
-             *
-             * The current backend does not
-             * expose that endpoint yet.
-             */
+            // Restore selected order because closeViewModal()
+            // sets selectedOrder = null
+            selectedOrder = orderToEdit;
 
+            // Reset form
+            orderForm.reset();
+            garmentsContainer.innerHTML = "";
+            orderMessage.textContent = "";
 
-            alert(
-                "Order editing will be connected to the order update API."
-            );
+            // Fill customer details
+            document.getElementById("customerName").value =
+                orderToEdit.customerName || "";
 
+            document.getElementById("phone").value =
+                orderToEdit.phone || "";
+
+            document.getElementById("email").value =
+                orderToEdit.email || "";
+
+            // Load existing garments
+            if (Array.isArray(orderToEdit.garments)) {
+
+                orderToEdit.garments.forEach(
+                    function (garment) {
+
+                        addGarmentRow(
+                            garment.type,
+                            garment.quantity
+                        );
+
+                    }
+                );
+            }
+
+            // Change button text
+            createOrderButton.textContent =
+                "Save Changes";
+
+            // Open order modal
+            orderModal.classList.add("active");
         }
     );
 
