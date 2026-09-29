@@ -4,6 +4,9 @@ const profileForm =
 const profileMessage =
     document.getElementById("profileMessage");
 
+const profilePhotoMessage =
+    document.getElementById("profilePhotoMessage");    
+
 const saveButton =
     document.getElementById("saveButton");
 
@@ -113,7 +116,7 @@ profileImageInput.addEventListener(
             file.type !== "image/png"
         ) {
 
-            profileMessage.textContent =
+            profilePhotoMessage.textContent =
                 "Only JPG and PNG images are allowed.";
 
             profileImageInput.value = "";
@@ -133,11 +136,11 @@ profileImageInput.addEventListener(
 
             profileImageInput.value = "";
 
-            profileMessage.textContent =
+            profilePhotoMessage.textContent =
                 "Please upload an image smaller than 10 MB.";
 
             alert(
-                "Image size is too large.\n\nPlease upload an image smaller than 10 MB."
+                "Image size is too large.\n Please upload an image smaller than 10 MB."
             );
 
             return;
@@ -169,7 +172,7 @@ profileImageInput.addEventListener(
             "inline-block";
 
 
-        profileMessage.textContent =
+        profilePhotoMessage.textContent =
             "Preview ready. Click Save Photo to upload.";
 
     }
