@@ -139,10 +139,6 @@ profileImageInput.addEventListener(
             profilePhotoMessage.textContent =
                 "Please upload an image smaller than 10 MB.";
 
-            alert(
-                "Image size is too large.\n Please upload an image smaller than 10 MB."
-            );
-
             return;
         }
 
