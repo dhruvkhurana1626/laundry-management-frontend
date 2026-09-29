@@ -102,30 +102,16 @@ profileImageInput.addEventListener(
     function () {
 
         const file =
-            profileImageInput.files[0];
+    profileImageInput.files[0];
 
         if (!file) {
             return;
         }
 
 
-        // Validate file type
-
-        if (
-            file.type !== "image/jpeg" &&
-            file.type !== "image/png"
-        ) {
-
-            profilePhotoMessage.textContent =
-                "Only JPG and PNG images are allowed.";
-
-            profileImageInput.value = "";
-
-            return;
-        }
-
-
-        // Validate file size: 10 MB
+        // =========================
+        // Validate file size first
+        // =========================
 
         const maxSize =
             2 * 1024 * 1024;
@@ -137,11 +123,38 @@ profileImageInput.addEventListener(
             profileImageInput.value = "";
 
             profilePhotoMessage.textContent =
-                "Please upload an image smaller than 10 MB.";
+                "Image is too large. Please select an image under 2 MB.";
+
+            alert(
+                "Image is too large.\n\nPlease select an image under 2 MB."
+            );
 
             return;
         }
 
+
+        // =========================
+        // Validate file type
+        // =========================
+
+        if (
+            file.type !== "image/jpeg" &&
+            file.type !== "image/png"
+        ) {
+
+            selectedProfileImage = null;
+
+            profileImageInput.value = "";
+
+            profilePhotoMessage.textContent =
+                "Only JPG and PNG images are allowed.";
+
+            alert(
+                "Invalid image format.\n\nPlease select a JPG or PNG image."
+            );
+
+            return;
+        }
 
         selectedProfileImage = file;
 
