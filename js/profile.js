@@ -122,17 +122,23 @@ profileImageInput.addEventListener(
         }
 
 
-        // Validate file size: 2 MB
+        // Validate file size: 10 MB
 
         const maxSize =
             2 * 1024 * 1024;
 
         if (file.size > maxSize) {
 
-            profileMessage.textContent =
-                "Image size must be less than 2 MB.";
+            selectedProfileImage = null;
 
             profileImageInput.value = "";
+
+            profileMessage.textContent =
+                "Please upload an image smaller than 10 MB.";
+
+            alert(
+                "Image size is too large.\n\nPlease upload an image smaller than 10 MB."
+            );
 
             return;
         }
