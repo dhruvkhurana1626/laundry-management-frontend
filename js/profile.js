@@ -304,9 +304,6 @@ saveProfileImageButton.addEventListener(
         saveProfileImageButton.textContent =
             "Uploading...";
 
-        profileMessage.textContent =
-            "Uploading profile photo...";
-
 
         const formData =
             new FormData();
@@ -523,9 +520,6 @@ removeProfileImageButton.addEventListener(
 
         removeProfileImageButton.textContent =
             "Removing...";
-
-        profileMessage.textContent =
-            "Removing profile photo...";
 
 
         try {
