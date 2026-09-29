@@ -5,7 +5,7 @@ const profileMessage =
     document.getElementById("profileMessage");
 
 const profilePhotoMessage =
-    document.getElementById("profilePhotoMessage");    
+    document.getElementById("profilePhotoMessage");
 
 const saveButton =
     document.getElementById("saveButton");
@@ -89,17 +89,23 @@ let profileImagePreviewUrl = null;
 
 const DEFAULT_PROFILE_IMAGE = "/images/default-profile.svg";
 
-changeProfileImageButton.addEventListener(
-    "click",
-    function () {
-        profileImageInput.click();
-    }
-);
+if (
+    changeProfileImageButton &&
+    profileImageInput
+) {
+    changeProfileImageButton.addEventListener(
+        "click",
+        function () {
+            profileImageInput.click();
+        }
+    );
+}
 
 
-profileImageInput.addEventListener(
-    "change",
-    function () {
+if (profileImageInput) {
+    profileImageInput.addEventListener(
+        "change",
+        function () {
 
         const file =
     profileImageInput.files[0];
@@ -107,7 +113,6 @@ profileImageInput.addEventListener(
         if (!file) {
             return;
         }
-
 
         // =========================
         // Validate file size first
@@ -119,12 +124,21 @@ profileImageInput.addEventListener(
         if (file.size > maxSize) {
 
             selectedProfileImage = null;
+
             profileImageInput.value = "";
 
+            // Hide Save / Cancel
+            saveProfileImageButton.style.display =
+                "none";
+
+            cancelProfileImageButton.style.display =
+                "none";
+
+            // Show error
             profilePhotoMessage.textContent =
                 "Image is too large. Please select an image under 5 MB.";
 
-            profileImageError.style.display =
+            profilePhotoMessage.style.display =
                 "block";
 
             return;
@@ -154,8 +168,8 @@ profileImageInput.addEventListener(
         // Valid image selected
         // Clear previous error
 
-        profileImageError.textContent = "";
-        profileImageError.style.display = "none";
+        profilePhotoMessage.textContent = "";
+        profilePhotoMessage.style.display = "none";
 
         selectedProfileImage = file;
 
@@ -185,7 +199,8 @@ profileImageInput.addEventListener(
             "Preview ready. Click Save Photo to upload.";
 
     }
-);
+    );
+}
 
 
 // =========================
@@ -211,11 +226,14 @@ cancelProfileImageButton.addEventListener(
         saveProfileImageButton.style.display =
             "none";
 
-        cancelProfileImageButton.style.display =
+                cancelProfileImageButton.style.display =
             "none";
 
-        profileMessage.textContent =
+        profilePhotoMessage.textContent =
             "Profile photo changes cancelled.";
+
+        profilePhotoMessage.style.display =
+            "block";
     }
 );
 
@@ -378,7 +396,9 @@ saveProfileImageButton.addEventListener(
 
 
                 // Clear preview message after successful upload
+
                 profilePhotoMessage.textContent = "";
+                profilePhotoMessage.style.display = "none";
 
             } else {
 
@@ -389,12 +409,68 @@ saveProfileImageButton.addEventListener(
                 );
 
 
-                profileMessage.textContent =
+                let errorMessage =
                     data.message ||
                     data.error ||
                     responseText ||
                     "Unable to upload profile photo.";
 
+
+                // Handle Spring Boot maximum upload size error
+
+                if (
+                    responseText
+                        .toLowerCase()
+                        .includes("maximum upload size exceeded")
+                ) {
+
+                    errorMessage =
+                        "Image is too large. Please select an image under 5 MB.";
+                }
+
+
+                // Show user-friendly error
+
+                profilePhotoMessage.textContent =
+                    errorMessage;
+
+                profilePhotoMessage.style.display =
+                    "block";
+
+
+                // Clear selected file
+
+                selectedProfileImage = null;
+
+                profileImageInput.value = "";
+
+
+                // Hide Save and Cancel buttons
+
+                saveProfileImageButton.style.display =
+                    "none";
+
+                cancelProfileImageButton.style.display =
+                    "none";
+
+
+                // Remove temporary preview
+
+                if (profileImagePreviewUrl) {
+
+                    URL.revokeObjectURL(
+                        profileImagePreviewUrl
+                    );
+
+                    profileImagePreviewUrl = null;
+                }
+
+
+                // Restore previous saved image
+
+                profileImage.src =
+                    previousProfileImageUrl ||
+                    DEFAULT_PROFILE_IMAGE;
             }
 
 
@@ -417,8 +493,6 @@ saveProfileImageButton.addEventListener(
             saveProfileImageButton.textContent =
                 "Save Photo";
 
-            loadProfile();
-
         }
 
     }
@@ -428,6 +502,7 @@ saveProfileImageButton.addEventListener(
 //========================
 // Remove image
 //========================
+
 
 removeProfileImageButton.addEventListener(
     "click",
@@ -534,8 +609,11 @@ removeProfileImageButton.addEventListener(
                     "none";
 
 
-                profileMessage.textContent =
+                profilePhotoMessage.textContent =
                     "Profile photo removed successfully.";
+
+                profilePhotoMessage.style.display =
+                    "block";
 
             } else {
 
@@ -605,6 +683,10 @@ async function loadProfile() {
             await response.json();
 
         console.log("Profile:", data);
+
+        // Loading the saved profile clears temporary photo messages.
+        profilePhotoMessage.textContent = "";
+        profilePhotoMessage.style.display = "none";
 
 
         if (data.profileImageUrl) {
@@ -682,7 +764,6 @@ async function loadProfile() {
     }
 
 }
-
 
 // =========================
 // Update Profile
@@ -857,6 +938,7 @@ profileForm.addEventListener(
 
     }
 );
+
 
 // =========================
 // Logout
