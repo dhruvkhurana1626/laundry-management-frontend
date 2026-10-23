@@ -15,7 +15,7 @@ const logoutButton =
 
 
 const nameInput =
-    document.getElementById("name");
+    document.getElementById("username");
 
 const emailInput =
     document.getElementById("email");

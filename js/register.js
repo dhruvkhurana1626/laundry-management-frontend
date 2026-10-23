@@ -106,8 +106,8 @@ registerForm.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
-    const name =
-        document.getElementById("name").value.trim();
+    const username =
+        document.getElementById("username").value.trim();
 
     const email =
         document.getElementById("email").value.trim();
@@ -133,7 +133,7 @@ registerForm.addEventListener("submit", async function (event) {
                 },
 
                 body: JSON.stringify({
-                    name: name,
+                    username: username,
                     email: email,
                     password: password
                 })
